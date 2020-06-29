@@ -3,7 +3,6 @@ from PIL import ImageTk, Image
 
 root = Tk()
 
-
 class Aplication():
     def __init__(self):
         self.root = root
