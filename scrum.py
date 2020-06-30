@@ -133,7 +133,10 @@ class Aplication():
         self.windowpopup.title('Nova Tarefa')
         self.windowpopup.geometry('500x300')
         self.windowpopup.config(background='#668899')
-        self.windowpopup.minsize(width=450, height=250)
+        self.windowpopup.resizable(False, False)
+        self.windowpopup.transient(self.root)
+        self.windowpopup.focus_force()
+        self.windowpopup.grab_set()
 
 
         # -----
