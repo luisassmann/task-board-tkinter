@@ -1,14 +1,11 @@
 from tkinter import *
 from PIL import ImageTk, Image
-from db import *
+from server import *
 
 root = Tk()
 
-# ------ BACK - END ----------
-
-
 # ------ FRONT - END ---------
-class Aplication():
+class Aplication(funcs, database):
     def __init__(self):
         self.root = root
         self.tela()
@@ -27,25 +24,62 @@ class Aplication():
         self.frame1 = Frame(self.root, bd=4, bg='#223333', highlightthickness=3,
                             highlightbackground='#556666')
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
-
-        self.tituloF = Entry(self.frame1, text='miss', bd=0, bg='#223344',
+        # ---
+        self.tituloF1 = Entry(self.frame1, bd=0, bg='#223344',
                              fg='#fff', font=('arial', 14, 'bold'),
                              justify='center')
-        self.tituloF.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
+        self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
+
+        self.descricF1 = Text(self.frame1, bd=0, bg='#223344',
+                             fg='#fff', font=('arial', 13))
+        self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
+
+        self.prazoF1 = Entry(self.frame1, bd=0, bg='#223344',
+                             fg='#fff', font=('arial', 13), justify='center')
+        self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
         # Do;;;
         self.frame2 = Frame(self.root, bd=4, bg='#223333', highlightthickness=3,
                             highlightbackground='#556666')
         self.frame2.place(relx=0.01, rely=0.4, relwidth=0.85, relheight=0.26)
+
+        # ---
+        self.tituloF2 = Entry(self.frame2, bd=0, bg='#223344',
+                              fg='#fff', font=('arial', 14, 'bold'),
+                              justify='center')
+        self.tituloF2.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
+
+        self.descricF2 = Text(self.frame2, bd=0, bg='#223344',
+                              fg='#fff', font=('arial', 13))
+        self.descricF2.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
+
+        self.prazoF2 = Entry(self.frame2, bd=0, bg='#223344',
+                             fg='#fff', font=('arial', 13), justify='center')
+        self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
+
         # =========================================================
         # Finish;;;
         self.frame3 = Frame(self.root, bd=4, bg='#223333', highlightthickness=3,
                             highlightbackground='#556666')
         self.frame3.place(relx=0.01, rely=0.7, relwidth=0.85, relheight=0.26)
 
+        # ---
+        self.tituloF3 = Entry(self.frame3, bd=0, bg='#223344',
+                              fg='#fff', font=('arial', 14, 'bold'),
+                              justify='center')
+        self.tituloF3.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
+
+        self.descricF3 = Text(self.frame3, bd=0, bg='#223344',
+                              fg='#fff', font=('arial', 13))
+        self.descricF3.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
+
+        self.prazoF3 = Entry(self.frame3, bd=0, bg='#223344',
+                             fg='#fff', font=('arial', 13), justify='center')
+        self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
+
     def widgets(self):
-        # Botão Novo:
+
         self.novobut = Button(self.root, text='Novo', fg='#fff', font=('arial', 11, 'bold'),
                               bd=0, bg='#225588', activebackground='#aaeeff',
                               command=self.popUp)
@@ -108,8 +142,10 @@ class Aplication():
 
         # --- BOTÃO SALVAR ---
         self.salvar_bt = Button(self.windowpopup, text='Salvar', fg='#fff', font=('arial', 10, 'bold'),
-                               bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222')
+                               bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222',
+                                command=self.toF1)
         self.salvar_bt.place(relx=0.7, rely=0.73, relwidth=0.2, relheight=0.1)
+
 
 
 Aplication()
