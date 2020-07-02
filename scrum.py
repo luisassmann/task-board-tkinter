@@ -55,9 +55,9 @@ class funcs():
         titulo = self.cursor.execute("""
             SELECT titulo FROM tarefas;
         """)
-        for v in titulo:
 
-            self.tituloF1.insert('', END, values=v)
+
+        self.tituloF1.insert(END, titulo)
 
 
         self.desconectarBD()
