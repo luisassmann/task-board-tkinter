@@ -4,68 +4,10 @@ from tkinter import messagebox
 from tkinter import tix
 from tkinter import ttk
 import sqlite3
+from server import *
+
 
 root = Tk()
-# ----- BACK - END -----------
-class funcs():
-    def conectarBD(self):
-        self.conn = sqlite3.connect('./tarefas.db')
-        self.cursor = self.conn.cursor()
-        print('Connecting DataBase................../')
-
-    def desconectarBD(self):
-        self.conn.close()
-        print('Desconnecting DataBase.............../')
-
-    def montarTabelaBD(self):
-        self.conectarBD()
-
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS tarefas (
-            code INTEGER PRIMARY KEY,
-            titulo CHAR(50),
-            descricao CHAR(200),
-            prazo CHAR(20)       
-            );
-        """)
-
-        self.conn.commit()
-        print('DataBase has been Created............/')
-
-        self.desconectarBD()
-
-    def variaveisTarefa(self):
-        self.titulo = self.tituloEntry.get()
-        self.descricao = self.descricaoEntry.get('1.0', 'end')
-        self.prazo = self.prazoEntry.get()
-
-    def inserirTarefaNoBD(self):
-        self.variaveisTarefa()
-        self.conectarBD()
-
-        self.cursor.execute("""
-            INSERT INTO tarefas (titulo, descricao, prazo)
-                VALUES (?, ?, ?);
-        """, (self.titulo, self.descricao, self.prazo))
-
-        self.desconectarBD()
-
-    def mostrarTarefaAFazer(self):
-        self.conectarBD()
-
-        titulo = self.cursor.execute("""
-            SELECT titulo FROM tarefas;
-        """)
-
-
-        self.tituloF1.insert(END, titulo)
-
-
-        self.desconectarBD()
-        self.windowpopup.destroy()
-
-    def botaoSalvar(self):
-        self.inserirTarefaNoBD()
-        self.mostrarTarefaAFazer()
 
 # ------ FRONT - END ---------
 class Aplication(funcs):
@@ -74,8 +16,9 @@ class Aplication(funcs):
         self.tela()
         self.frames()
         self.widgets()
-        self.Menu()
+        self.lista_de_Tarefas()
         self.montarTabelaBD()
+        self.inserir_na_lista()
         self.root.mainloop()
 
     def tela(self):
@@ -85,8 +28,21 @@ class Aplication(funcs):
         self.root.minsize(width=750, height=550)
 
     def frames(self):
+        # Criação de duas tabelas Notebook para melhor organ. de espaço;;;
+        self.abas = ttk.Notebook(self.root)
+        self.tela_inicial = Frame(self.abas)
+        self.lista_de_tarefas_ = Frame(self.abas)
+
+        self.tela_inicial.configure(background="#c1c1c1")
+        self.lista_de_tarefas_.configure(background='#c1c1c1')
+
+        self.abas.add(self.tela_inicial, text='Painel')
+        self.abas.add(self.lista_de_tarefas_, text='Lista de Tarefas')
+
+        self.abas.place(relx=0, rely=0, relwidth=1, relheight=1)
+
         # To do;;;
-        self.frame1 = Frame(self.root, bd=4, bg='#e0e0e0', highlightthickness=3,
+        self.frame1 = Frame(self.tela_inicial, bd=4, bg='#e0e0e0', highlightthickness=3,
                             highlightbackground='#556666')
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
         # ---
@@ -105,7 +61,7 @@ class Aplication(funcs):
 
         # =========================================================
         # Do;;;
-        self.frame2 = Frame(self.root, bd=4, bg='#e0e0e0', highlightthickness=3,
+        self.frame2 = Frame(self.tela_inicial, bd=4, bg='#e0e0e0', highlightthickness=3,
                             highlightbackground='#556666')
         self.frame2.place(relx=0.01, rely=0.4, relwidth=0.85, relheight=0.26)
 
@@ -125,7 +81,7 @@ class Aplication(funcs):
 
         # =========================================================
         # Finish;;;
-        self.frame3 = Frame(self.root, bd=4, bg='#e0e0e0', highlightthickness=3,
+        self.frame3 = Frame(self.tela_inicial, bd=4, bg='#e0e0e0', highlightthickness=3,
                             highlightbackground='#556666')
         self.frame3.place(relx=0.01, rely=0.7, relwidth=0.85, relheight=0.26)
 
@@ -143,35 +99,46 @@ class Aplication(funcs):
                              fg='#0c0c0c', font=('Tahoma', 13), justify='center')
         self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
+        # =========================================================
+        # Segunda tela;;;
+
+        self.frame4 = Frame(self.lista_de_tarefas_, bd=4, bg='#e5e5e5', highlightthickness=3,
+                            highlightbackground='#556666')
+        self.frame4.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.35)
+
+
+        self.frame5 = Frame(self.lista_de_tarefas_, bd=4, bg='#e5e5e5', highlightthickness=3,
+                            highlightbackground='#556666')
+        self.frame5.place(relx=0.01, rely=0.38, relwidth=0.98, relheight=0.6)
+
     def widgets(self):
 
-        self.novobut = Button(self.root, text='Nova Tarefa', fg='#fff', font=('Tahoma', 11, 'bold'),
+        self.novobut = Button(self.tela_inicial, text='Nova Tarefa', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff',
                               command=self.popUp)
         self.novobut.place(relx=0.01, rely=0.02, relwidth=0.85, relheight=0.06)
         # =========================================================
         # Botão Apagar Tarefa;;;
-        self.apagarbut = Button(self.root, text='Apagar', fg='#fff', font=('Tahoma', 10, 'bold'),
+        self.apagarbut = Button(self.tela_inicial, text='Apagar', fg='#fff', font=('Roboto', 10, 'bold'),
                                 bd=1, bg='#c02222', activebackground='#fe4422')
         self.apagarbut.place(relx=0.88, rely=0.12, relwidth=0.1, relheight=0.06)
 
         # =========================================================
         # Botão Fazer;;;
-        self.fazerbut = Button(self.root, text='Fazer', fg='#fff', font=('Tahoma',10,'bold'),
+        self.fazerbut = Button(self.tela_inicial, text='Fazer', fg='#fff', font=('Roboto',10,'bold'),
                                bd=1, bg='#11c033', activebackground='#118844')
         self.fazerbut.place(relx=0.88, rely=0.28, relwidth=0.1, relheight=0.06)
 
         # =========================================================
         # Botão Feito;;;
-        self.feitobut = Button(self.root, text='Feito', fg='#fff', font=('Tahoma', 10, 'bold'),
+        self.feitobut = Button(self.tela_inicial, text='Feito', fg='#fff', font=('Roboto', 10, 'bold'),
                                bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222')
         self.feitobut.place(relx=0.88, rely=0.5, relwidth=0.1, relheight=0.06)
 
         # =========================================================
         # Botão ver O que já foi feito;
-        self.prontasbut = Button(self.root, text='Ver o que\njá foi feito', fg='#0f0f0f', font=('Tahoma', 9, 'bold'),
-                                 bd=1, bg='#e0e0e0', activebackground='lightblue',
-                                 command=self.lista_Prontos)
+        self.prontasbut = Button(self.tela_inicial, text='Ver o que\njá foi feito', fg='#0f0f0f', font=('Roboto', 9, 'bold'),
+                                 bd=1, bg='#e0e0e0', activebackground='lightblue')
         self.prontasbut.place(relx=0.88 , rely=0.88 , relwidth=0.1 , relheight=0.06)
 
     def popUp(self):
@@ -215,97 +182,39 @@ class Aplication(funcs):
         # --- BOTÃO SALVAR ---
         self.salvar_bt = Button(self.windowpopup, text='Salvar', fg='#fff', font=('Tahoma', 10, 'bold'),
                                bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222',
-                                command=self.botaoSalvar)
+                                command=self.inserirTarefaNoBD)
         self.salvar_bt.place(relx=0.7, rely=0.73, relwidth=0.2, relheight=0.1)
-    
+
     def lista_de_Tarefas(self):
-        self.lista_tarefas = Toplevel()
-        self.lista_tarefas.title('Lista de Tarefas')
-        self.lista_tarefas.geometry('500x600')
-        self.lista_tarefas.config(background='#c1c1c1')
-        self.lista_tarefas.minsize(width=350, height=450)
-
-
         # --- LISTA DE TAREFAS ---
         self.style = ttk.Style()
         self.style.configure("mystyle.Treeview", bd=0, font=('Tahoma', 11))
         self.style.configure("mystyle.Treeview.Heading", font=('Tahoma', 11, 'bold'))
 
-        self.listaUser = ttk.Treeview(
-            self.lista_tarefas, height=3,
+        self.listaTarefas = ttk.Treeview(
+            self.lista_de_tarefas_, height=3,
             column=('col1', 'col2', 'col3', 'col4'),
             style='mystyle.Treeview'
         )
-        self.listaUser.heading('#0', text='')
-        self.listaUser.heading('#1', text='code')
-        self.listaUser.heading('#2', text='Título')
-        self.listaUser.heading('#3', text='Descrição')
-        self.listaUser.heading('#4', text='Prazo')
+        self.listaTarefas.heading('#0', text='')
+        self.listaTarefas.heading('#1', text='code')
+        self.listaTarefas.heading('#2', text='Título')
+        self.listaTarefas.heading('#3', text='Descrição')
+        self.listaTarefas.heading('#4', text='Prazo')
 
-        self.listaUser.column('#0', width=0)
-        self.listaUser.column('#1', width=35)
-        self.listaUser.column('#2', width=120)
-        self.listaUser.column('#3', width=150)
-        self.listaUser.column('#4', width=100)
+        self.listaTarefas.column('#0', width=0)
+        self.listaTarefas.column('#1', width=35)
+        self.listaTarefas.column('#2', width=120)
+        self.listaTarefas.column('#3', width=150)
+        self.listaTarefas.column('#4', width=100)
 
-        self.listaUser.place(relx=0.015, rely=0.15, relwidth=0.93, relheight=0.84)
+        self.listaTarefas.place(relx=0.03, rely=0.4, relwidth=0.93, relheight=0.55)
 
-        self.scrollLista = Scrollbar(self.lista_tarefas, orient='vertical')
-        self.listaUser.configure(yscroll=self.scrollLista.set)
-        self.scrollLista.place(relx=0.95, rely=0.15, relwidth=0.035, relheight=0.84)
+        self.scrollLista = Scrollbar(self.lista_de_tarefas_, orient='vertical')
+        self.listaTarefas.configure(yscroll=self.scrollLista.set)
+        self.scrollLista.place(relx=0.945, rely=0.4, relwidth=0.035, relheight=0.55)
 
-    def lista_Prontos(self):
-        self.lista_tarefas_prontas = Toplevel()
-        self.lista_tarefas_prontas.title('Tarefas Feitas 👍')
-        self.lista_tarefas_prontas.geometry('500x600')
-        self.lista_tarefas_prontas.config(background='#c5c5c5')
-        self.lista_tarefas_prontas.minsize(width=490, height=590)
-        self.lista_tarefas_prontas.focus_force()
-        self.lista_tarefas_prontas.grab_set()
-
-        self.style = ttk.Style()
-        self.style.configure("mystyle.Treeview", background='#b5b5b5', font=('Tahoma', 11))
-        self.style.configure("mystyle.Treeview.Heading", bg='#b9b9b9', font=('Tahoma', 11, 'bold'))
-
-        self.listaUser = ttk.Treeview(
-            self.lista_tarefas_prontas, height=3,
-            column=('col1', 'col2', 'col3', 'col4'),
-            style='mystyle.Treeview'
-        )
-        self.listaUser.heading('#0', text='')
-        self.listaUser.heading('#1', text='code')
-        self.listaUser.heading('#2', text='Título')
-        self.listaUser.heading('#3', text='Descrição')
-        self.listaUser.heading('#4', text='Prazo')
-
-        self.listaUser.column('#0', width=0)
-        self.listaUser.column('#1', width=35)
-        self.listaUser.column('#2', width=120)
-        self.listaUser.column('#3', width=150)
-        self.listaUser.column('#4', width=100)
-
-        self.listaUser.place(relx=0.015, rely=0.15, relwidth=0.93, relheight=0.84)
-
-        self.scrollLista = Scrollbar(self.lista_tarefas_prontas, orient='vertical')
-        self.listaUser.configure(yscroll=self.scrollLista.set)
-        self.scrollLista.place(relx=0.95, rely=0.15, relwidth=0.035, relheight=0.84)
-
-    def Menu(self):
-        menubar = Menu(self.root)
-        self.root.config(menu=menubar)
-        filemenu1 = Menu(menubar)
-        filemenu2 = Menu(menubar)
-
-        def Quit():
-            self.root.destroy()
-
-        menubar.add_cascade(label="Opções", menu=filemenu1)
-        menubar.add_cascade(label="Tarefas", menu=filemenu2)
-
-        filemenu1.add_command(label="Sair", command=Quit)
-
-        filemenu2.add_command(label='Lista de Tarefas', command=self.lista_de_Tarefas)
-
+        self.listaTarefas.bind('<Double-1>', self.show_in_task)
 
 
 Aplication()
