@@ -108,6 +108,49 @@ class Aplication():
         self.frame4.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.35)
 
 
+        self.ListaTitulo = Label(self.frame4, text='Título', bg='#e5e5e5',
+                                 font=('Roboto', 12))
+        self.ListaTitulo.place(relx=0.03, rely=0.01)
+        self.ListaTituloEntry = Entry(self.frame4, borderwidth=1, bg='#fff', fg='#000',
+                                      font=('Roboto', 12))
+        self.ListaTituloEntry.place(relx=0.01, rely=0.15, relwidth=0.8, relheight=0.14)
+
+
+        self.ListaDescricao = Label(self.frame4, text='Descrição', bg='#e5e5e5',
+                                 font=('Roboto', 12))
+        self.ListaDescricao.place(relx=0.03, rely=0.3)
+        self.ListaDescricaoEntry = Text(self.frame4, borderwidth=1, bg='#fff', fg='#000',
+                                      font=('Roboto', 12))
+        self.ListaDescricaoEntry.place(relx=0.01, rely=0.44, relwidth=0.5, relheight=0.5)
+
+        self.ListaPrazo = Label(self.frame4, text='Prazo', bg='#e5e5e5',
+                                 font=('Roboto', 12))
+        self.ListaPrazo.place(relx=0.55, rely=0.3)
+        self.ListaPrazoEntry = Entry(self.frame4, borderwidth=1, bg='#fff', fg='#000',
+                                      font=('Roboto', 12))
+        self.ListaPrazoEntry.place(relx=0.53, rely=0.44, relwidth=0.28, relheight=0.14)
+
+
+        self.alterar_botao = Button(self.frame4, text='Alterar', bd=1, bg='#115599',
+                                    font=('Roboto', 12, 'bold'), fg='#fff')
+        self.alterar_botao.place(relx=0.84, rely=0.1, relwidth=0.14, relheight=0.2)
+
+
+        self.buscar_botao = Button(self.frame4, text='Buscar', bd=1, bg='#11c099',
+                                    font=('Roboto', 12, 'bold'), fg='#fff')
+        self.buscar_botao.place(relx=0.84, rely=0.4, relwidth=0.14, relheight=0.2)
+
+
+        self.limpar_botao = Button(self.frame4, text='Limpar', bd=1, bg='#a0a0a0',
+                                    font=('Roboto', 12, 'bold'), fg='#222222')
+        self.limpar_botao.place(relx=0.84, rely=0.7, relwidth=0.14, relheight=0.2)
+
+
+        self.apagar_botao = Button(self.frame4, text='Apagar', bd=1, bg='#c02222',
+                                   font=('Roboto', 12, 'bold'), fg='#fff')
+        self.apagar_botao.place(relx=0.6, rely=0.7, relwidth=0.14, relheight=0.2)
+
+
         self.frame5 = Frame(self.lista_de_tarefas_, bd=4, bg='#e5e5e5', highlightthickness=3,
                             highlightbackground='#556666')
         self.frame5.place(relx=0.01, rely=0.38, relwidth=0.98, relheight=0.6)
@@ -167,41 +210,40 @@ class Aplication():
         self.novobut.place(relx=0.01, rely=0.02, relwidth=0.85, relheight=0.06)
         # =========================================================
         # Botão Apagar Tarefa;;;
-        self.apagarbut = Button(self.tela_inicial, text='Apagar', fg='#fff', font=('Roboto', 10, 'bold'),
+        self.apagarbut = Button(self.tela_inicial, text='Apagar', fg='#fff', font=('Roboto', 11, 'bold'),
                                 bd=1, bg='#c02222', activebackground='#fe4422')
         self.apagarbut.place(relx=0.88, rely=0.12, relwidth=0.1, relheight=0.06)
 
         # =========================================================
         # Botão Fazer;;;
-        self.fazerbut = Button(self.tela_inicial, text='Fazer', fg='#fff', font=('Roboto',10,'bold'),
+        self.fazerbut = Button(self.tela_inicial, text='Fazer', fg='#fff', font=('Roboto',11,'bold'),
                                bd=1, bg='#11c033', activebackground='#118844')
         self.fazerbut.place(relx=0.88, rely=0.28, relwidth=0.1, relheight=0.06)
 
         # =========================================================
         # Botão Feito;;;
-        self.feitobut = Button(self.tela_inicial, text='Feito', fg='#fff', font=('Roboto', 10, 'bold'),
+        self.feitobut = Button(self.tela_inicial, text='Feito', fg='#fff', font=('Roboto', 11, 'bold'),
                                bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222')
         self.feitobut.place(relx=0.88, rely=0.5, relwidth=0.1, relheight=0.06)
-
-        # =========================================================
-        # Botão ver O que já foi feito;
-        self.prontasbut = Button(self.tela_inicial, text='Ver o que\njá foi feito', fg='#0f0f0f', font=('Roboto', 9, 'bold'),
-                                 bd=1, bg='#e0e0e0', activebackground='lightblue')
-        self.prontasbut.place(relx=0.88 , rely=0.88 , relwidth=0.1 , relheight=0.06)
 
 
 
     def lista_de_Tarefas(self):
         # --- LISTA DE TAREFAS ---
         self.style = ttk.Style()
-        self.style.configure("mystyle.Treeview", bd=0, font=('Roboto', 11))
+        self.style.theme_use('vista')
+        self.style.configure("mystyle.Treeview", bd=0, font=('Roboto', 11),
+                             fieldbackground='#c1c1c1')
         self.style.configure("mystyle.Treeview.Heading", font=('Roboto', 11, 'bold'))
+        self.style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})])
 
         self.listaTarefas = ttk.Treeview(
             self.lista_de_tarefas_, height=3,
             column=('col1', 'col2', 'col3', 'col4'),
             style='mystyle.Treeview'
         )
+        self.listaTarefas.tag_configure('odd', background='#E8E8E8')
+        self.listaTarefas.tag_configure('even', background='#DFDFDF')
         self.listaTarefas.heading('#0', text='')
         self.listaTarefas.heading('#1', text='code')
         self.listaTarefas.heading('#2', text='Título')
