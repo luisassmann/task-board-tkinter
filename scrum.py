@@ -28,14 +28,93 @@ tarefa_Done = {
     "prazo": 'Até 2020'
 }
 
+class funcs():
+    def limpar_NovaTarefa(self):
+        self.entryTitulo.delete(0, END)
+        self.entryDescricao.delete('1.0', 'end')
+        self.entryPrazo.delete(0, END)
+
+    def conectarDB(self):
+        self.conn = sqlite3.connect('./tarefas.db')
+        self.cursor = self.conn.cursor()
+        print('Banco de Dados Conectado............................../')
+
+    def desconectarDB(self):
+        self.cursor.close()
+        print('Banco de Dados Desconectado.........................../')
+
+    def montarTable(self):
+        self.conectarDB()
+
+        self.cursor.execute("""
+            CREATE TABLE IF NOT EXISTS tarefas (
+                code INTEGER PRIMARY KEY,
+                titulo CHAR(50) NOT NULL,
+                descricao CHAR(200),
+                prazo CHAR(40)
+            );
+        """)
+
+        self.conn.commit()
+        print('Banco de Dados Criado................................./')
+
+        self.desconectarDB()
+
+    def valores_Tarefa(self):
+        self.code = self.ListacodeEntry.get()
+        self.titulo = self.entryTitulo.get().strip().capitalize()
+        self.descricao = self.entryDescricao.get('1.0', 'end').strip()
+        self.prazo = self.entryPrazo.get().strip()
+
+    def inserirTarefa_Lista(self):
+        self.valores_Tarefa()
+        self.conectarDB()
+
+        aviso_msg = 'É Necessário colocar ao menos um título na tarefa! ⚠'
+
+        if self.titulo == '' or len(self.titulo) <= 1:
+            messagebox.showwarning('Sem Título - Aviso!', aviso_msg)
+
+        else:
+            self.cursor.execute("""
+                INSERT INTO tarefas (titulo, descricao, prazo)
+                    VALUES (?, ?, ?)
+            """,
+            (self.titulo, self.descricao, self.prazo))
+
+        self.conn.commit()
+        self.desconectarDB()
+        self.limpar_NovaTarefa()
+        print('Nova Tarefa Adicionada................................../')
+        self.Colocar_na_Lista()
+
+    def Colocar_na_Lista(self):
+        self.listaTarefas.delete(*self.listaTarefas.get_children())
+        self.conectarDB()
+
+        lista = self.cursor.execute("""
+            SELECT code, titulo, descricao, prazo FROM tarefas
+                ORDER BY code ASC;
+        """)
+
+        for val in lista:
+            self.listaTarefas.insert('', END, values=val)
+
+        self.desconectarDB()
+        print('Tarefa(s) está na lista................................/')
+
+        self.desconectarDB()
+
 # ------ FRONT - END ---------
-class Aplication():
+class Aplication(funcs):
     def __init__(self):
         self.root = root
         self.tela()
         self.frames()
         self.widgets()
         self.lista_de_Tarefas()
+        self.montarTable()
+        self.Colocar_na_Lista()
         self.root.mainloop()
 
     def tela(self):
@@ -68,16 +147,16 @@ class Aplication():
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
         # ---
         self.tituloF1 = Label(self.frame1, text=tarefa_ToDo["titulo"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Tahoma', 14, 'bold'),
+                             fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                              justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
         self.descricF1 = Label(self.frame1, text=tarefa_ToDo["descricao"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Tahoma', 13))
+                             fg='#0c0c0c', font=('Roboto', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
         self.prazoF1 = Label(self.frame1, text=tarefa_ToDo["prazo"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Tahoma', 13), justify='center')
+                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
@@ -88,16 +167,16 @@ class Aplication():
 
         # ---
         self.tituloF2 = Label(self.frame2, text=tarefa_Do["titulo"], bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Tahoma', 14, 'bold'),
+                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF2.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
         self.descricF2 = Label(self.frame2, text=tarefa_Do["descricao"], bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Tahoma', 13))
+                              fg='#0c0c0c', font=('Roboto', 13))
         self.descricF2.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
         self.prazoF2 = Label(self.frame2, text=tarefa_Do["prazo"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Tahoma', 13), justify='center')
+                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
@@ -108,16 +187,16 @@ class Aplication():
 
         # ---
         self.tituloF3 = Label(self.frame3, text=tarefa_Done["titulo"], bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Tahoma', 14, 'bold'),
+                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF3.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
         self.descricF3 = Label(self.frame3, text=tarefa_Done["descricao"], bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Tahoma', 13))
+                              fg='#0c0c0c', font=('Roboto', 13))
         self.descricF3.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
         self.prazoF3 = Label(self.frame3, text=tarefa_Done["prazo"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Tahoma', 13), justify='center')
+                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
@@ -128,12 +207,20 @@ class Aplication():
         self.frame4.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.35)
 
 
+        self.Listacode = Label(self.frame4, text='code', bg='#e5e5e5',
+                               font=('Roboto', 12))
+        self.Listacode.place(relx=0.018, rely=0.01)
+        self.ListacodeEntry = Entry(self.frame4, borderwidth=0, bg='#c4c4c4', fg='#000',
+                                    font=('Roboto', 12, 'bold'), justify='center')
+        self.ListacodeEntry.place(relx=0.018, rely=0.15, relwidth=0.05, relheight=0.14)
+
+
         self.ListaTitulo = Label(self.frame4, text='Título', bg='#e5e5e5',
                                  font=('Roboto', 12))
-        self.ListaTitulo.place(relx=0.03, rely=0.01)
+        self.ListaTitulo.place(relx=0.1, rely=0.01)
         self.ListaTituloEntry = Entry(self.frame4, borderwidth=1, bg='#fff', fg='#000',
                                       font=('Roboto', 12))
-        self.ListaTituloEntry.place(relx=0.01, rely=0.15, relwidth=0.8, relheight=0.14)
+        self.ListaTituloEntry.place(relx=0.088, rely=0.15, relwidth=0.72, relheight=0.14)
 
 
         self.ListaDescricao = Label(self.frame4, text='Descrição', bg='#e5e5e5',
@@ -142,6 +229,7 @@ class Aplication():
         self.ListaDescricaoEntry = Text(self.frame4, borderwidth=1, bg='#fff', fg='#000',
                                       font=('Roboto', 12))
         self.ListaDescricaoEntry.place(relx=0.01, rely=0.44, relwidth=0.5, relheight=0.5)
+
 
         self.ListaPrazo = Label(self.frame4, text='Prazo', bg='#e5e5e5',
                                  font=('Roboto', 12))
@@ -218,7 +306,8 @@ class Aplication():
         # ----------------------
         # ========= BOTÃO SALVAR
         self.Salvar = Button(self.frame7, text='Salvar', bd=1, bg='#33ff66', fg='#000',
-                             font=('Roboto', 12, 'bold'), activebackground='blue')
+                             font=('Roboto', 12, 'bold'), activebackground='blue',
+                             command=self.inserirTarefa_Lista)
         self.Salvar.place(relx=0.65, rely=0.64, relwidth=0.3, relheight=0.15)
 
 
@@ -254,7 +343,7 @@ class Aplication():
         self.style.theme_use('vista')
         self.style.configure("mystyle.Treeview", bd=0, font=('Roboto', 12),
                              fieldbackground='#c1c1c1')
-        self.style.configure("mystyle.Treeview.Heading", font=('Roboto', 12, 'bold'))
+        self.style.configure("mystyle.Treeview.Heading", font=('Roboto', 14, 'bold'))
         self.style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})])
 
         self.listaTarefas = ttk.Treeview(
@@ -264,17 +353,17 @@ class Aplication():
         )
         self.listaTarefas.tag_configure('odd', background='#E8E8E8')
         self.listaTarefas.tag_configure('even', background='#DFDFDF')
-        self.listaTarefas.heading('#0', text='')
+        self.listaTarefas.heading('#0', text='##')
         self.listaTarefas.heading('#1', text='code')
         self.listaTarefas.heading('#2', text='Título')
         self.listaTarefas.heading('#3', text='Descrição')
         self.listaTarefas.heading('#4', text='Prazo')
 
-        self.listaTarefas.column('#0', width=0)
-        self.listaTarefas.column('#1', width=25)
+        self.listaTarefas.column('#0', width=1)
+        self.listaTarefas.column('#1', width=30, anchor='center')
         self.listaTarefas.column('#2', width=120)
         self.listaTarefas.column('#3', width=180)
-        self.listaTarefas.column('#4', width=100)
+        self.listaTarefas.column('#4', width=100, anchor='center')
 
         self.listaTarefas.place(relx=0.03, rely=0.4, relwidth=0.93, relheight=0.55)
 
