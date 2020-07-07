@@ -8,6 +8,26 @@ import sqlite3
 
 root = Tk()
 
+
+
+tarefa_ToDo = {
+    "titulo": 'Tarefa Padrão ToDo',
+    "descricao": 'Essa tarefa é padrão inicial.',
+    "prazo": 'Até 2020'
+}
+
+tarefa_Do = {
+    "titulo": 'Tarefa Padrão Do',
+    "descricao": 'Essa tarefa é padrão inicial.',
+    "prazo": 'Até 2020'
+}
+
+tarefa_Done = {
+    "titulo": 'Tarefa Padrão Done',
+    "descricao": 'Essa tarefa é padrão inicial.',
+    "prazo": 'Até 2020'
+}
+
 # ------ FRONT - END ---------
 class Aplication():
     def __init__(self):
@@ -47,16 +67,16 @@ class Aplication():
                             highlightbackground='#556666')
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
         # ---
-        self.tituloF1 = Entry(self.frame1, bd=0, bg='#e5e5e5',
+        self.tituloF1 = Label(self.frame1, text=tarefa_ToDo["titulo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Tahoma', 14, 'bold'),
                              justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF1 = Text(self.frame1, bd=0, bg='#e5e5e5',
+        self.descricF1 = Label(self.frame1, text=tarefa_ToDo["descricao"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Tahoma', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF1 = Entry(self.frame1, bd=0, bg='#e5e5e5',
+        self.prazoF1 = Label(self.frame1, text=tarefa_ToDo["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Tahoma', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
@@ -67,16 +87,16 @@ class Aplication():
         self.frame2.place(relx=0.01, rely=0.4, relwidth=0.85, relheight=0.26)
 
         # ---
-        self.tituloF2 = Entry(self.frame2, bd=0, bg='#e5e5e5',
+        self.tituloF2 = Label(self.frame2, text=tarefa_Do["titulo"], bg='#e5e5e5',
                               fg='#0c0c0c', font=('Tahoma', 14, 'bold'),
                               justify='center')
         self.tituloF2.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF2 = Text(self.frame2, bd=0, bg='#e5e5e5',
+        self.descricF2 = Label(self.frame2, text=tarefa_Do["descricao"], bg='#e5e5e5',
                               fg='#0c0c0c', font=('Tahoma', 13))
         self.descricF2.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF2 = Entry(self.frame2, bd=0, bg='#e5e5e5',
+        self.prazoF2 = Label(self.frame2, text=tarefa_Do["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Tahoma', 13), justify='center')
         self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
@@ -87,16 +107,16 @@ class Aplication():
         self.frame3.place(relx=0.01, rely=0.7, relwidth=0.85, relheight=0.26)
 
         # ---
-        self.tituloF3 = Entry(self.frame3, bd=0, bg='#e5e5e5',
+        self.tituloF3 = Label(self.frame3, text=tarefa_Done["titulo"], bg='#e5e5e5',
                               fg='#0c0c0c', font=('Tahoma', 14, 'bold'),
                               justify='center')
         self.tituloF3.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF3 = Text(self.frame3, bd=0, bg='#e5e5e5',
+        self.descricF3 = Label(self.frame3, text=tarefa_Done["descricao"], bg='#e5e5e5',
                               fg='#0c0c0c', font=('Tahoma', 13))
         self.descricF3.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF3 = Entry(self.frame3, bd=0, bg='#e5e5e5',
+        self.prazoF3 = Label(self.frame3, text=tarefa_Done["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Tahoma', 13), justify='center')
         self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
@@ -232,9 +252,9 @@ class Aplication():
         # --- LISTA DE TAREFAS ---
         self.style = ttk.Style()
         self.style.theme_use('vista')
-        self.style.configure("mystyle.Treeview", bd=0, font=('Roboto', 11),
+        self.style.configure("mystyle.Treeview", bd=0, font=('Roboto', 12),
                              fieldbackground='#c1c1c1')
-        self.style.configure("mystyle.Treeview.Heading", font=('Roboto', 11, 'bold'))
+        self.style.configure("mystyle.Treeview.Heading", font=('Roboto', 12, 'bold'))
         self.style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})])
 
         self.listaTarefas = ttk.Treeview(
@@ -251,9 +271,9 @@ class Aplication():
         self.listaTarefas.heading('#4', text='Prazo')
 
         self.listaTarefas.column('#0', width=0)
-        self.listaTarefas.column('#1', width=35)
+        self.listaTarefas.column('#1', width=25)
         self.listaTarefas.column('#2', width=120)
-        self.listaTarefas.column('#3', width=150)
+        self.listaTarefas.column('#3', width=180)
         self.listaTarefas.column('#4', width=100)
 
         self.listaTarefas.place(relx=0.03, rely=0.4, relwidth=0.93, relheight=0.55)
