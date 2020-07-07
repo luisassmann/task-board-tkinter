@@ -4,21 +4,18 @@ from tkinter import messagebox
 from tkinter import tix
 from tkinter import ttk
 import sqlite3
-from server import *
 
 
 root = Tk()
 
 # ------ FRONT - END ---------
-class Aplication(funcs):
+class Aplication():
     def __init__(self):
         self.root = root
         self.tela()
         self.frames()
         self.widgets()
         self.lista_de_Tarefas()
-        self.montarTabelaBD()
-        self.inserir_na_lista()
         self.root.mainloop()
 
     def tela(self):
@@ -31,13 +28,17 @@ class Aplication(funcs):
         # Criação de duas tabelas Notebook para melhor organ. de espaço;;;
         self.abas = ttk.Notebook(self.root)
         self.tela_inicial = Frame(self.abas)
+        self.novaTarefa = Frame(self.abas)
         self.lista_de_tarefas_ = Frame(self.abas)
 
+
         self.tela_inicial.configure(background="#c1c1c1")
+        self.novaTarefa.configure(background="#c1c1c1")
         self.lista_de_tarefas_.configure(background='#c1c1c1')
 
-        self.abas.add(self.tela_inicial, text='Painel')
-        self.abas.add(self.lista_de_tarefas_, text='Lista de Tarefas')
+        self.abas.add(self.tela_inicial, text='  PAINEL  ')
+        self.abas.add(self.novaTarefa, text="   NOVA TAREFA   ")
+        self.abas.add(self.lista_de_tarefas_, text='  LISTA DE TAREFAS  ')
 
         self.abas.place(relx=0, rely=0, relwidth=1, relheight=1)
 
@@ -100,7 +101,7 @@ class Aplication(funcs):
         self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
-        # Segunda tela;;;
+        # LISTA DE TAREFAS;;;
 
         self.frame4 = Frame(self.lista_de_tarefas_, bd=4, bg='#e5e5e5', highlightthickness=3,
                             highlightbackground='#556666')
@@ -111,11 +112,58 @@ class Aplication(funcs):
                             highlightbackground='#556666')
         self.frame5.place(relx=0.01, rely=0.38, relwidth=0.98, relheight=0.6)
 
+        # NOVA TAREFA ;;;
+        self.frame6 = Frame(self.novaTarefa, bd=4, bg='#e0e009', highlightthickness=3,
+                            highlightbackground='#556666')
+        self.frame6.place(relx=0.15, rely=0.07, relwidth=0.7, relheight=0.15)
+
+        self.labNova_Tarefa = Label(self.frame6, text='Nova Tarefa', bg='#e0e009',
+                                    font=('Bradley Hand ITC', 36))
+        self.labNova_Tarefa.place(relx=0.3, rely=0.03)
+
+
+
+        self.frame7 = Frame(self.novaTarefa, bd=4, bg='#e0e0e0', highlightthickness=3,
+                            highlightbackground='#556666')
+        self.frame7.place(relx=0.15, rely=0.23, relwidth=0.7, relheight=0.5)
+
+
+
+        self.labelTitulo = Label(self.frame7, text='Título', bg='#e0e0e0',
+                                 font=('Roboto', 14))
+        self.labelTitulo.place(relx=0.08, rely=0.03)
+        self.entryTitulo = Entry(self.frame7, borderwidth=1, bg='#fff', fg='#000',
+                                 font=('Roboto', 12))
+        self.entryTitulo.place(relx=0.05, rely=0.13, relwidth=0.9, relheight=0.1)
+
+
+        self.labelDescricao = Label(self.frame7, text='Descrição', bg='#e0e0e0',
+                                 font=('Roboto', 14))
+        self.labelDescricao.place(relx=0.08, rely=0.3)
+        self.entryDescricao = Text(self.frame7, borderwidth=1, bg='#fff', fg='#000',
+                                 font=('Roboto', 12))
+        self.entryDescricao.place(relx=0.05, rely=0.4, relwidth=0.55, relheight=0.4)
+
+
+        self.labelPrazo = Label(self.frame7, text='Prazo', bg='#e0e0e0',
+                                font=('Roboto', 14))
+        self.labelPrazo.place(relx=0.65, rely=0.3)
+        self.entryPrazo = Entry(self.frame7, borderwidth=1, bg='#fff', fg='#000',
+                                font=('Roboto', 12))
+        self.entryPrazo.place(relx=0.65, rely=0.4, relwidth=0.3, relheight=0.1)
+
+        # ----------------------
+        # ========= BOTÃO SALVAR
+        self.Salvar = Button(self.frame7, text='Salvar', bd=1, bg='#33ff66', fg='#000',
+                             font=('Roboto', 12, 'bold'), activebackground='blue')
+        self.Salvar.place(relx=0.65, rely=0.64, relwidth=0.3, relheight=0.15)
+
+
     def widgets(self):
 
-        self.novobut = Button(self.tela_inicial, text='Nova Tarefa', fg='#fff', font=('Roboto', 11, 'bold'),
+        self.novobut = Button(self.tela_inicial, text='TAREFAS', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff',
-                              command=self.popUp)
+                              command=self.novaTarefa)
         self.novobut.place(relx=0.01, rely=0.02, relwidth=0.85, relheight=0.06)
         # =========================================================
         # Botão Apagar Tarefa;;;
@@ -141,55 +189,13 @@ class Aplication(funcs):
                                  bd=1, bg='#e0e0e0', activebackground='lightblue')
         self.prontasbut.place(relx=0.88 , rely=0.88 , relwidth=0.1 , relheight=0.06)
 
-    def popUp(self):
-        self.windowpopup = Toplevel()
-        self.windowpopup.title('📚 Nova Tarefa')
-        self.windowpopup.geometry('500x300')
-        self.windowpopup.config(background='#c5c5c5')
-        self.windowpopup.resizable(False, False)
-        self.windowpopup.transient(self.root)
-        self.windowpopup.focus_force()
-        self.windowpopup.grab_set()
 
-
-        # ----- TITULO DA NOVA TAREFA ------------
-        self.tituloTar = Label(self.windowpopup, text='Título', bg='#c5c5c5', font=('Tahoma', 14, 'bold'),
-                                fg='#0c0c0c')
-        self.tituloTar.place(relx=0.02,rely=0.09)
-
-        self.tituloEntry = Entry(self.windowpopup, bg='#e0e0e0', borderwidth=0, font=('Tahoma', 12),
-                                 fg='#0c0c0c', bd=1)
-        self.tituloEntry.place(relx=0.02, rely=0.19, relwidth=0.96, relheight=0.1)
-
-        # ------ CAIXA DE DESCRIÇÃO ----------
-        self.descricaoTar = Label(self.windowpopup, text='Descrição', bg='#c5c5c5', font=('Tahoma', 14, 'bold'),
-                               fg='#0c0c0c')
-        self.descricaoTar.place(relx=0.02, rely=0.33)
-
-        self.descricaoEntry = Text(self.windowpopup, bg='#e0e0e0', borderwidth=0,
-                                 font=('Hack', 12), fg='#0c0c0c', bd=1)
-        self.descricaoEntry.place(relx=0.02, rely=0.43, relwidth=0.5, relheight=0.4)
-
-        # ------ DATA PRAZO ------
-        self.prazo = Label(self.windowpopup, text='Prazo', bg='#c5c5c5', font=('Tahoma', 14, 'bold'),
-                           fg='#0c0c0c')
-        self.prazo.place(relx=0.62, rely=0.43)
-
-        self.prazoEntry = Entry(self.windowpopup, bg='#e0e0e0', borderwidth=0, font=('Tahoma', 12),
-                                fg='#0c0c0c', justify='center', bd=1)
-        self.prazoEntry.place(relx=0.61, rely=0.53, relheight=0.1)
-
-        # --- BOTÃO SALVAR ---
-        self.salvar_bt = Button(self.windowpopup, text='Salvar', fg='#fff', font=('Tahoma', 10, 'bold'),
-                               bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222',
-                                command=self.inserirTarefaNoBD)
-        self.salvar_bt.place(relx=0.7, rely=0.73, relwidth=0.2, relheight=0.1)
 
     def lista_de_Tarefas(self):
         # --- LISTA DE TAREFAS ---
         self.style = ttk.Style()
-        self.style.configure("mystyle.Treeview", bd=0, font=('Tahoma', 11))
-        self.style.configure("mystyle.Treeview.Heading", font=('Tahoma', 11, 'bold'))
+        self.style.configure("mystyle.Treeview", bd=0, font=('Roboto', 11))
+        self.style.configure("mystyle.Treeview.Heading", font=('Roboto', 11, 'bold'))
 
         self.listaTarefas = ttk.Treeview(
             self.lista_de_tarefas_, height=3,
@@ -213,8 +219,6 @@ class Aplication(funcs):
         self.scrollLista = Scrollbar(self.lista_de_tarefas_, orient='vertical')
         self.listaTarefas.configure(yscroll=self.scrollLista.set)
         self.scrollLista.place(relx=0.945, rely=0.4, relwidth=0.035, relheight=0.55)
-
-        self.listaTarefas.bind('<Double-1>', self.show_in_task)
 
 
 Aplication()
