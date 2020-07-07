@@ -9,18 +9,18 @@ Scrum-task-board with python.
 O Scrum é uma ferramenta de organização excelente e necessária em várias situações, como trabalho, escola ou até pessoalmente.
 
 
-### 🖥 Requisitos
+## 🖥 Requisitos
 
 - [Python 3+](http://www.python.org/)
     - Tkinter
 - Sqlite3 ➡ ``pip install sqlite3``
 
 
-### 🎡 Como Rodar
+## 🎡 Como Rodar
 
 Entrar na pasta do arquivo scrum.py e rodar o comando `python scrum.py`
 
 
-### ⚖ Liçenca
+## ⚖ Liçenca
 
 - [MIT License](https://github.com/luisassmann/scrum-tkinter/blob/master/LICENSE?raw=True)
