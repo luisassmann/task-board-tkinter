@@ -34,6 +34,12 @@ class funcs():
         self.entryDescricao.delete('1.0', 'end')
         self.entryPrazo.delete(0, END)
 
+    def limpar_Lista_entrys(self):
+        self.ListacodeEntry.delete(0, END)
+        self.ListaTituloEntry.delete(0, END)
+        self.ListaDescricaoEntry.delete('1.0', 'end')
+        self.ListaPrazoEntry.delete(0, END)
+
     def conectarDB(self):
         self.conn = sqlite3.connect('./tarefas.db')
         self.cursor = self.conn.cursor()
@@ -104,6 +110,20 @@ class funcs():
         print('Tarefa(s) está na lista................................/')
 
         self.desconectarDB()
+
+    def Selecionar_da_Lista(self, event):
+        self.limpar_Lista_entrys()
+        self.listaTarefas.selection()
+
+        for dado in self.listaTarefas.selection():
+            col1, col2, col3, col4 = self.listaTarefas.item(dado, 'values')
+            self.ListacodeEntry.insert(END, col1)
+            self.ListaTituloEntry.insert(END, col2)
+            self.ListaDescricaoEntry.insert('1.0', col3)
+            self.ListaPrazoEntry.insert(END, col4)
+
+
+
 
 # ------ FRONT - END ---------
 class Aplication(funcs):
@@ -250,7 +270,8 @@ class Aplication(funcs):
 
 
         self.limpar_botao = Button(self.frame4, text='Limpar', bd=1, bg='#a0a0a0',
-                                    font=('Roboto', 12, 'bold'), fg='#222222')
+                                    font=('Roboto', 12, 'bold'), fg='#222222',
+                                   command=self.limpar_Lista_entrys)
         self.limpar_botao.place(relx=0.84, rely=0.7, relwidth=0.14, relheight=0.2)
 
 
@@ -370,6 +391,8 @@ class Aplication(funcs):
         self.scrollLista = Scrollbar(self.lista_de_tarefas_, orient='vertical')
         self.listaTarefas.configure(yscroll=self.scrollLista.set)
         self.scrollLista.place(relx=0.945, rely=0.4, relwidth=0.035, relheight=0.55)
+
+        self.listaTarefas.bind('<Double-1>', self.Selecionar_da_Lista)
 
 
 Aplication()
