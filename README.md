@@ -6,7 +6,7 @@ Scrum-task-board with python.
 
 ## ⁉ O que é o Scrum?
 
-O Scrum é uma ferramenta de organização excelente e necessária em várias situações, como trabalho, escola ou até pessoalmente.
+- O Scrum é uma ferramenta de organização excelente e necessária em várias situações, como trabalho, escola ou até pessoalmente.
 
 
 ## 🖥 Requisitos
@@ -18,7 +18,7 @@ O Scrum é uma ferramenta de organização excelente e necessária em várias si
 
 ## 🎡 Como Rodar
 
-Entrar na pasta do arquivo scrum.py e rodar o comando `python scrum.py`
+- Entrar na pasta do arquivo scrum.py e rodar o comando `python scrum.py`
 
 
 ## ⚖ Liçenca
