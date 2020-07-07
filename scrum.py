@@ -91,7 +91,7 @@ class funcs():
         self.conn.commit()
         self.desconectarDB()
         self.limpar_NovaTarefa()
-        print('Nova Tarefa Adicionada................................../')
+        print('Nova Tarefa Adicionada................................/')
         self.Colocar_na_Lista()
 
     def Colocar_na_Lista(self):
@@ -107,7 +107,7 @@ class funcs():
             self.listaTarefas.insert('', END, values=val)
 
         self.desconectarDB()
-        print('Tarefa(s) está na lista................................/')
+        print('Tarefa(s) está na lista.............................../')
 
         self.desconectarDB()
 
@@ -122,7 +122,21 @@ class funcs():
             self.ListaDescricaoEntry.insert('1.0', col3)
             self.ListaPrazoEntry.insert(END, col4)
 
+    def DeleteTarefaLista(self):
+        self.valores_Tarefa()
+        self.conectarDB()
 
+        self.cursor.execute("""
+            DELETE FROM tarefas WHERE code = ?
+        """,(
+            self.code
+        ))
+        self.conn.commit()
+
+        self.desconectarDB()
+        self.limpar_Lista_entrys()
+        self.Colocar_na_Lista()
+        print('Tarefa Deletada......................................./')
 
 
 # ------ FRONT - END ---------
@@ -276,7 +290,8 @@ class Aplication(funcs):
 
 
         self.apagar_botao = Button(self.frame4, text='Apagar', bd=1, bg='#c02222',
-                                   font=('Roboto', 12, 'bold'), fg='#fff')
+                                   font=('Roboto', 12, 'bold'), fg='#fff',
+                                   command=self.DeleteTarefaLista)
         self.apagar_botao.place(relx=0.6, rely=0.7, relwidth=0.14, relheight=0.2)
 
 
@@ -331,7 +346,6 @@ class Aplication(funcs):
                              command=self.inserirTarefa_Lista)
         self.Salvar.place(relx=0.65, rely=0.64, relwidth=0.3, relheight=0.15)
 
-
     def widgets(self):
 
         self.novobut = Button(self.tela_inicial, text='TAREFAS', fg='#fff', font=('Roboto', 11, 'bold'),
@@ -355,8 +369,6 @@ class Aplication(funcs):
         self.feitobut = Button(self.tela_inicial, text='Feito', fg='#fff', font=('Roboto', 11, 'bold'),
                                bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222')
         self.feitobut.place(relx=0.88, rely=0.5, relwidth=0.1, relheight=0.06)
-
-
 
     def lista_de_Tarefas(self):
         # --- LISTA DE TAREFAS ---
