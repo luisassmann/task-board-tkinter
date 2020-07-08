@@ -138,6 +138,48 @@ class funcs():
         self.Colocar_na_Lista()
         print('Tarefa Deletada......................................./')
 
+    def AlterarTarefaLista(self):
+        self.codigo = self.ListacodeEntry.get()
+        self.titulo = self.ListaTituloEntry.get().strip()
+        self.descricao = self.ListaDescricaoEntry.get('1.0', 'end').strip()
+        self.prazo = self.ListaPrazoEntry.get().strip()
+        self.conectarDB()
+
+        self.cursor.execute("""
+            UPDATE tarefas SET titulo = ?, descricao = ?, prazo = ?
+                WHERE code = ?;
+        """,(self.titulo, self.descricao, self.prazo, self.codigo))
+
+        self.conn.commit()
+
+        self.limpar_Lista_entrys()
+        self.Colocar_na_Lista()
+        self.desconectarDB()
+
+    def BuscarTarefaLista(self):
+        self.conectarDB()
+        self.listaTarefas.delete(*self.listaTarefas.get_children())
+
+
+        self.ListaTituloEntry.insert(END, '%')
+        titulo = self.ListaTituloEntry.get()
+
+        self.cursor.execute("""
+            SELECT code, titulo, descricao, prazo FROM tarefas
+                WHERE titulo LIKE '%s' ORDER BY code ASC;
+        """ % titulo)
+
+        self.BuscaTarefa = self.cursor.fetchall()
+        for t in self.BuscaTarefa:
+            self.listaTarefas.insert('', END, values=t)
+
+
+        self.limpar_Lista_entrys()
+        self.desconectarDB()
+
+    def lancar_tarefa_TODO(self):
+
+
 
 # ------ FRONT - END ---------
 class Aplication(funcs):
@@ -274,12 +316,14 @@ class Aplication(funcs):
 
 
         self.alterar_botao = Button(self.frame4, text='Alterar', bd=1, bg='#115599',
-                                    font=('Roboto', 12, 'bold'), fg='#fff')
+                                    font=('Roboto', 12, 'bold'), fg='#fff',
+                                    command=self.AlterarTarefaLista)
         self.alterar_botao.place(relx=0.84, rely=0.1, relwidth=0.14, relheight=0.2)
 
 
         self.buscar_botao = Button(self.frame4, text='Buscar', bd=1, bg='#11c099',
-                                    font=('Roboto', 12, 'bold'), fg='#fff')
+                                    font=('Roboto', 12, 'bold'), fg='#fff',
+                                   command=self.BuscarTarefaLista)
         self.buscar_botao.place(relx=0.84, rely=0.4, relwidth=0.14, relheight=0.2)
 
 
