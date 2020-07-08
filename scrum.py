@@ -10,23 +10,6 @@ root = Tk()
 
 
 
-tarefa_ToDo = {
-    "titulo": 'Tarefa Padrão ToDo',
-    "descricao": 'Essa tarefa é padrão inicial.',
-    "prazo": 'Até 2020'
-}
-
-tarefa_Do = {
-    "titulo": 'Tarefa Padrão Do',
-    "descricao": 'Essa tarefa é padrão inicial.',
-    "prazo": 'Até 2020'
-}
-
-tarefa_Done = {
-    "titulo": 'Tarefa Padrão Done',
-    "descricao": 'Essa tarefa é padrão inicial.',
-    "prazo": 'Até 2020'
-}
 
 class funcs():
     def limpar_NovaTarefa(self):
@@ -176,8 +159,6 @@ class funcs():
 
         self.limpar_Lista_entrys()
         self.desconectarDB()
-
-    def lancar_tarefa_TODO(self):
 
 
 
