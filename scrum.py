@@ -8,7 +8,23 @@ import sqlite3
 
 root = Tk()
 
+tarefa_TODO = {
+    "titulo": "",
+    "descricao": "",
+    "prazo": ""
+}
 
+tarefa_DO = {
+    "titulo": "",
+    "descricao": "",
+    "prazo": ""
+}
+
+tarefa_DONE = {
+    "titulo": "",
+    "descricao": "",
+    "prazo": ""
+}
 
 
 class funcs():
@@ -160,6 +176,12 @@ class funcs():
         self.limpar_Lista_entrys()
         self.desconectarDB()
 
+    def Colocar_no_Painel(self):
+        self.listaTarefas.selection()
+
+        v = 1
+        for i in self.litaTarefas.selection():
+            col1, col2, col3, col4 = self.listaTarefas.item(i, 'values')
 
 
 # ------ FRONT - END ---------
@@ -203,16 +225,16 @@ class Aplication(funcs):
                             highlightbackground='#556666')
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
         # ---
-        self.tituloF1 = Label(self.frame1, text=tarefa_ToDo["titulo"], bg='#e5e5e5',
+        self.tituloF1 = Label(self.frame1, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                              justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF1 = Label(self.frame1, text=tarefa_ToDo["descricao"], bg='#e5e5e5',
+        self.descricF1 = Label(self.frame1, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF1 = Label(self.frame1, text=tarefa_ToDo["prazo"], bg='#e5e5e5',
+        self.prazoF1 = Label(self.frame1, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
@@ -223,16 +245,16 @@ class Aplication(funcs):
         self.frame2.place(relx=0.01, rely=0.4, relwidth=0.85, relheight=0.26)
 
         # ---
-        self.tituloF2 = Label(self.frame2, text=tarefa_Do["titulo"], bg='#e5e5e5',
+        self.tituloF2 = Label(self.frame2, text='', bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF2.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF2 = Label(self.frame2, text=tarefa_Do["descricao"], bg='#e5e5e5',
+        self.descricF2 = Label(self.frame2, text='', bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 13))
         self.descricF2.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF2 = Label(self.frame2, text=tarefa_Do["prazo"], bg='#e5e5e5',
+        self.prazoF2 = Label(self.frame2, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
@@ -243,16 +265,16 @@ class Aplication(funcs):
         self.frame3.place(relx=0.01, rely=0.7, relwidth=0.85, relheight=0.26)
 
         # ---
-        self.tituloF3 = Label(self.frame3, text=tarefa_Done["titulo"], bg='#e5e5e5',
+        self.tituloF3 = Label(self.frame3, text='', bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF3.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF3 = Label(self.frame3, text=tarefa_Done["descricao"], bg='#e5e5e5',
+        self.descricF3 = Label(self.frame3, text='', bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 13))
         self.descricF3.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF3 = Label(self.frame3, text=tarefa_Done["prazo"], bg='#e5e5e5',
+        self.prazoF3 = Label(self.frame3, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
