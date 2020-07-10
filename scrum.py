@@ -208,6 +208,7 @@ class Aplication(funcs):
         self.Colocar_na_Lista()
         self.colocar_no_Painel_1()
         self.Tarefa_a_fazer()
+        self.Tarefa_fazendo()
         self.root.mainloop()
 
     def tela(self):
@@ -247,18 +248,6 @@ class Aplication(funcs):
         self.frame2.place(relx=0.01, rely=0.4, relwidth=0.85, relheight=0.26)
 
         # ---
-        self.tituloF2 = Label(self.frame2, text='', bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
-                              justify='center')
-        self.tituloF2.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
-
-        self.descricF2 = Label(self.frame2, text='', bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Roboto', 13))
-        self.descricF2.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
-
-        self.prazoF2 = Label(self.frame2, text='', bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
-        self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
         # Finish;;;
@@ -468,6 +457,20 @@ class Aplication(funcs):
         self.prazoF1 = Label(self.frame1, text=tarefa_TODO["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
+
+    def Tarefa_fazendo(self):
+        self.tituloF2 = Label(self.frame2, text='', bg='#e5e5e5',
+                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
+                              justify='center')
+        self.tituloF2.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
+
+        self.descricF2 = Label(self.frame2, text='', bg='#e5e5e5',
+                               fg='#0c0c0c', font=('Roboto', 13))
+        self.descricF2.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
+
+        self.prazoF2 = Label(self.frame2, text='', bg='#e5e5e5',
+                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
+        self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
 
 Aplication()
