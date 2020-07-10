@@ -176,12 +176,15 @@ class funcs():
         self.limpar_Lista_entrys()
         self.desconectarDB()
 
-    def Colocar_no_Painel(self):
+    def colocar_no_Painel_1(self):
         self.listaTarefas.selection()
 
-        v = 1
-        for i in self.litaTarefas.selection():
+
+        for i in self.listaTarefas.selection():
             col1, col2, col3, col4 = self.listaTarefas.item(i, 'values')
+            tarefa_DO["titulo"] = END, col2
+            tarefa_DO["descricao"] = col3
+            tarefa_DO["prazo"] = col4
 
 
 # ------ FRONT - END ---------
@@ -194,6 +197,7 @@ class Aplication(funcs):
         self.lista_de_Tarefas()
         self.montarTable()
         self.Colocar_na_Lista()
+        self.colocar_no_Painel_1()
         self.root.mainloop()
 
     def tela(self):
@@ -225,16 +229,16 @@ class Aplication(funcs):
                             highlightbackground='#556666')
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
         # ---
-        self.tituloF1 = Label(self.frame1, text='', bg='#e5e5e5',
+        self.tituloF1 = Label(self.frame1, text=tarefa_DO["titulo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                              justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF1 = Label(self.frame1, text='', bg='#e5e5e5',
+        self.descricF1 = Label(self.frame1, text=tarefa_DO["descricao"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF1 = Label(self.frame1, text='', bg='#e5e5e5',
+        self.prazoF1 = Label(self.frame1, text=tarefa_DO["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
