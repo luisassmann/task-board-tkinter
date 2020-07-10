@@ -181,15 +181,23 @@ class funcs():
 
     def colocar_no_Painel_1(self):
         self.lista = self.listaTarefas.get_children()
-
+        listaV1 = []
         i = 1
         for v in self.lista:
+            print(self.listaTarefas.item(v)["values"])
             listaV1 = self.listaTarefas.item(v)["values"]
+            print(listaV1)
             if i == 1:
                 break
 
-        for c in listaV1:
-            tarefa_TODO[]
+
+        tarefa_TODO["codigo"] = listaV1[0]
+        tarefa_TODO["titulo"] = listaV1[1]
+        tarefa_TODO["descricao"] = listaV1[2]
+        tarefa_TODO["prazo"] = listaV1[3]
+
+
+
 
 # ------ FRONT - END ---------
 class Aplication(funcs):
@@ -202,6 +210,7 @@ class Aplication(funcs):
         self.montarTable()
         self.Colocar_na_Lista()
         self.colocar_no_Painel_1()
+        self.Tarefa_a_fazer()
         self.root.mainloop()
 
     def tela(self):
@@ -233,18 +242,6 @@ class Aplication(funcs):
                             highlightbackground='#556666')
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
         # ---
-        self.tituloF1 = Label(self.frame1, text=tarefa_TODO["titulo"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Roboto', 14, 'bold'),
-                             justify='center')
-        self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
-
-        self.descricF1 = Label(self.frame1, text=tarefa_TODO["descricao"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Roboto', 13))
-        self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
-
-        self.prazoF1 = Label(self.frame1, text=tarefa_TODO["prazo"], bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
-        self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
         # Do;;;
@@ -405,7 +402,7 @@ class Aplication(funcs):
 
         self.novobut = Button(self.tela_inicial, text='TAREFAS', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff',
-                              command=self.novaTarefa)
+                              command=self.colocar_no_Painel_1)
         self.novobut.place(relx=0.01, rely=0.02, relwidth=0.85, relheight=0.06)
         # =========================================================
         # Botão Apagar Tarefa;;;
@@ -460,6 +457,20 @@ class Aplication(funcs):
         self.scrollLista.place(relx=0.945, rely=0.4, relwidth=0.035, relheight=0.55)
 
         self.listaTarefas.bind('<Double-1>', self.Selecionar_da_Lista)
+
+    def Tarefa_a_fazer(self):
+        self.tituloF1 = Label(self.frame1, text=tarefa_TODO["titulo"], bg='#e5e5e5',
+                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
+                              justify='center')
+        self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
+
+        self.descricF1 = Label(self.frame1, text=tarefa_TODO["descricao"], bg='#e5e5e5',
+                               fg='#0c0c0c', font=('Roboto', 13))
+        self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
+
+        self.prazoF1 = Label(self.frame1, text=tarefa_TODO["prazo"], bg='#e5e5e5',
+                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
+        self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
 
 Aplication()
