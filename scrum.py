@@ -30,6 +30,7 @@ tarefa_DONE = {
     "prazo": ""
 }
 
+
 # --------- BACK - END --- * to refactoring to another file *
 
 class funcs():
@@ -209,6 +210,7 @@ class Aplication(funcs):
         self.colocar_no_Painel_1()
         self.Tarefa_a_fazer()
         self.Tarefa_fazendo()
+        self.Tarefa_feita()
         self.root.mainloop()
 
     def tela(self):
@@ -256,18 +258,6 @@ class Aplication(funcs):
         self.frame3.place(relx=0.01, rely=0.7, relwidth=0.85, relheight=0.26)
 
         # ---
-        self.tituloF3 = Label(self.frame3, text='', bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
-                              justify='center')
-        self.tituloF3.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
-
-        self.descricF3 = Label(self.frame3, text='', bg='#e5e5e5',
-                              fg='#0c0c0c', font=('Roboto', 13))
-        self.descricF3.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
-
-        self.prazoF3 = Label(self.frame3, text='', bg='#e5e5e5',
-                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
-        self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
         # =========================================================
         # LISTA DE TAREFAS;;;
@@ -471,6 +461,20 @@ class Aplication(funcs):
         self.prazoF2 = Label(self.frame2, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
+
+    def Tarefa_feita(self):
+        self.tituloF3 = Label(self.frame3, text='', bg='#e5e5e5',
+                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
+                              justify='center')
+        self.tituloF3.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
+
+        self.descricF3 = Label(self.frame3, text='', bg='#e5e5e5',
+                               fg='#0c0c0c', font=('Roboto', 13))
+        self.descricF3.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
+
+        self.prazoF3 = Label(self.frame3, text='', bg='#e5e5e5',
+                             fg='#0c0c0c', font=('Roboto', 13), justify='center')
+        self.prazoF3.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
 
 Aplication()
