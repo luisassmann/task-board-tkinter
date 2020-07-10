@@ -7,20 +7,23 @@ import sqlite3
 
 
 root = Tk()
-
+titulo = ''
 tarefa_TODO = {
+    "codigo": "",
     "titulo": "",
     "descricao": "",
     "prazo": ""
 }
 
 tarefa_DO = {
+    "codigo": "",
     "titulo": "",
     "descricao": "",
     "prazo": ""
 }
 
 tarefa_DONE = {
+    "codigo": "",
     "titulo": "",
     "descricao": "",
     "prazo": ""
@@ -177,15 +180,16 @@ class funcs():
         self.desconectarDB()
 
     def colocar_no_Painel_1(self):
-        self.listaTarefas.selection()
+        self.lista = self.listaTarefas.get_children()
 
+        i = 1
+        for v in self.lista:
+            listaV1 = self.listaTarefas.item(v)["values"]
+            if i == 1:
+                break
 
-        for i in self.listaTarefas.selection():
-            col1, col2, col3, col4 = self.listaTarefas.item(i, 'values')
-            tarefa_DO["titulo"] = END, col2
-            tarefa_DO["descricao"] = col3
-            tarefa_DO["prazo"] = col4
-
+        for c in listaV1:
+            tarefa_TODO[]
 
 # ------ FRONT - END ---------
 class Aplication(funcs):
@@ -229,16 +233,16 @@ class Aplication(funcs):
                             highlightbackground='#556666')
         self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
         # ---
-        self.tituloF1 = Label(self.frame1, text=tarefa_DO["titulo"], bg='#e5e5e5',
+        self.tituloF1 = Label(self.frame1, text=tarefa_TODO["titulo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                              justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF1 = Label(self.frame1, text=tarefa_DO["descricao"], bg='#e5e5e5',
+        self.descricF1 = Label(self.frame1, text=tarefa_TODO["descricao"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF1 = Label(self.frame1, text=tarefa_DO["prazo"], bg='#e5e5e5',
+        self.prazoF1 = Label(self.frame1, text=tarefa_TODO["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
