@@ -186,9 +186,7 @@ class funcs():
         listaV1 = []
         i = 1
         for v in self.lista:
-            print(self.listaTarefas.item(v)["values"])
             listaV1 = self.listaTarefas.item(v)["values"]
-            print(listaV1)
             if i == 1:
                 break
 
