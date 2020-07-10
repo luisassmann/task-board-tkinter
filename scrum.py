@@ -7,7 +7,8 @@ import sqlite3
 
 
 root = Tk()
-titulo = ''
+
+
 tarefa_TODO = {
     "codigo": "",
     "titulo": "",
@@ -29,6 +30,7 @@ tarefa_DONE = {
     "prazo": ""
 }
 
+# --------- BACK - END --- * to refactoring to another file *
 
 class funcs():
     def limpar_NovaTarefa(self):
@@ -190,13 +192,10 @@ class funcs():
             if i == 1:
                 break
 
-
         tarefa_TODO["codigo"] = listaV1[0]
         tarefa_TODO["titulo"] = listaV1[1]
         tarefa_TODO["descricao"] = listaV1[2]
         tarefa_TODO["prazo"] = listaV1[3]
-
-
 
 
 # ------ FRONT - END ---------
