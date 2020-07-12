@@ -6,202 +6,12 @@ from tkinter import ttk
 import sqlite3
 
 from funcs import *
+from cache import *
 
 root = Tk()
 
-
-tarefa_TODO = {
-    "codigo": "",
-    "titulo": "",
-    "descricao": "",
-    "prazo": ""
-}
-
-tarefa_DO = {
-    "codigo": "",
-    "titulo": "",
-    "descricao": "",
-    "prazo": ""
-}
-
-tarefa_DONE = {
-    "codigo": "",
-    "titulo": "",
-    "descricao": "",
-    "prazo": ""
-}
-
-
-# --------- BACK - END --- * to refactoring to another file *
-
-class funcs():
-    def limpar_NovaTarefa(self):
-        self.entryTitulo.delete(0, END)
-        self.entryDescricao.delete('1.0', 'end')
-        self.entryPrazo.delete(0, END)
-
-    def limpar_Lista_entrys(self):
-        self.ListacodeEntry.delete(0, END)
-        self.ListaTituloEntry.delete(0, END)
-        self.ListaDescricaoEntry.delete('1.0', 'end')
-        self.ListaPrazoEntry.delete(0, END)
-
-    def conectarDB(self):
-        self.conn = sqlite3.connect('./tarefas.db')
-        self.cursor = self.conn.cursor()
-        print('Banco de Dados Conectado............................../')
-
-    def desconectarDB(self):
-        self.cursor.close()
-        print('Banco de Dados Desconectado.........................../')
-
-    def montarTable(self):
-        self.conectarDB()
-
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS tarefas (
-                code INTEGER PRIMARY KEY,
-                titulo CHAR(50) NOT NULL,
-                descricao CHAR(200),
-                prazo CHAR(40)
-            );
-        """)
-
-        self.conn.commit()
-        print('Banco de Dados Criado................................./')
-
-        self.desconectarDB()
-
-    def valores_Tarefa(self):
-        self.code = self.ListacodeEntry.get()
-        self.titulo = self.entryTitulo.get().strip().capitalize()
-        self.descricao = self.entryDescricao.get('1.0', 'end').strip()
-        self.prazo = self.entryPrazo.get().strip()
-
-    def inserirTarefa_Lista(self):
-        self.valores_Tarefa()
-        self.conectarDB()
-
-        aviso_msg = 'É Necessário colocar ao menos um título na tarefa! ⚠'
-
-        if self.titulo == '' or len(self.titulo) <= 1:
-            messagebox.showwarning('Sem Título - Aviso!', aviso_msg)
-
-        else:
-            self.cursor.execute("""
-                INSERT INTO tarefas (titulo, descricao, prazo)
-                    VALUES (?, ?, ?)
-            """,
-            (self.titulo, self.descricao, self.prazo))
-
-        self.conn.commit()
-        self.desconectarDB()
-        self.limpar_NovaTarefa()
-        print('Nova Tarefa Adicionada................................/')
-        self.Colocar_na_Lista()
-
-    def Colocar_na_Lista(self):
-        self.listaTarefas.delete(*self.listaTarefas.get_children())
-        self.conectarDB()
-
-        lista = self.cursor.execute("""
-            SELECT code, titulo, descricao, prazo FROM tarefas
-                ORDER BY code ASC;
-        """)
-
-        for val in lista:
-            self.listaTarefas.insert('', END, values=val)
-
-        self.desconectarDB()
-        print('Tarefa(s) está na lista.............................../')
-
-        self.desconectarDB()
-
-    def Selecionar_da_Lista(self, event):
-        self.limpar_Lista_entrys()
-        self.listaTarefas.selection()
-
-        for dado in self.listaTarefas.selection():
-            col1, col2, col3, col4 = self.listaTarefas.item(dado, 'values')
-            self.ListacodeEntry.insert(END, col1)
-            self.ListaTituloEntry.insert(END, col2)
-            self.ListaDescricaoEntry.insert('1.0', col3)
-            self.ListaPrazoEntry.insert(END, col4)
-
-    def DeleteTarefaLista(self):
-        self.valores_Tarefa()
-        self.conectarDB()
-
-        self.cursor.execute("""
-            DELETE FROM tarefas WHERE code = ?
-        """,(
-            self.code
-        ))
-        self.conn.commit()
-
-        self.desconectarDB()
-        self.limpar_Lista_entrys()
-        self.Colocar_na_Lista()
-        print('Tarefa Deletada......................................./')
-        self.colocar_no_Painel_1()
-
-    def AlterarTarefaLista(self):
-        self.codigo = self.ListacodeEntry.get()
-        self.titulo = self.ListaTituloEntry.get().strip()
-        self.descricao = self.ListaDescricaoEntry.get('1.0', 'end').strip()
-        self.prazo = self.ListaPrazoEntry.get().strip()
-        self.conectarDB()
-
-        self.cursor.execute("""
-            UPDATE tarefas SET titulo = ?, descricao = ?, prazo = ?
-                WHERE code = ?;
-        """,(self.titulo, self.descricao, self.prazo, self.codigo))
-
-        self.conn.commit()
-
-        self.limpar_Lista_entrys()
-        self.Colocar_na_Lista()
-        self.desconectarDB()
-        self.colocar_no_Painel_1()
-
-    def BuscarTarefaLista(self):
-        self.conectarDB()
-        self.listaTarefas.delete(*self.listaTarefas.get_children())
-
-
-        self.ListaTituloEntry.insert(END, '%')
-        titulo = self.ListaTituloEntry.get()
-
-        self.cursor.execute("""
-            SELECT code, titulo, descricao, prazo FROM tarefas
-                WHERE titulo LIKE '%s' ORDER BY code ASC;
-        """ % titulo)
-
-        self.BuscaTarefa = self.cursor.fetchall()
-        for t in self.BuscaTarefa:
-            self.listaTarefas.insert('', END, values=t)
-
-
-        self.limpar_Lista_entrys()
-        self.desconectarDB()
-
-    def colocar_no_Painel_1(self):
-        self.lista = self.listaTarefas.get_children()
-        self.listaV1 = []
-        i = 1
-        for v in self.lista:
-            self.listaV1 = self.listaTarefas.item(v)["values"]
-            if i == 1:
-                break
-
-        tarefa_TODO["codigo"] = self.listaV1[0]
-        tarefa_TODO["titulo"] = self.listaV1[1]
-        tarefa_TODO["descricao"] = self.listaV1[2]
-        tarefa_TODO["prazo"] = self.listaV1[3]
-
-
 # ------ FRONT - END ---------
-class Aplication(funcs):
+class Aplication(funcs, ):
     def __init__(self):
         self.root = root
         self.tela()
@@ -438,16 +248,16 @@ class Aplication(funcs):
         self.listaTarefas.bind('<Double-1>', self.Selecionar_da_Lista)
 
     def Tarefa_a_fazer(self):
-        self.tituloF1 = Label(self.frame1, text=tarefa_TODO["titulo"], bg='#e5e5e5',
+        self.tituloF1 = Label(self.frame1, text=self.tarefa_TODO["titulo"], bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF1 = Label(self.frame1, text=tarefa_TODO["descricao"], bg='#e5e5e5',
+        self.descricF1 = Label(self.frame1, text=self.tarefa_TODO["descricao"], bg='#e5e5e5',
                                fg='#0c0c0c', font=('Roboto', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF1 = Label(self.frame1, text=tarefa_TODO["prazo"], bg='#e5e5e5',
+        self.prazoF1 = Label(self.frame1, text=self.tarefa_TODO["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
