@@ -5,6 +5,7 @@ from tkinter import tix
 from tkinter import ttk
 import sqlite3
 
+from funcs import *
 
 root = Tk()
 
@@ -142,6 +143,7 @@ class funcs():
         self.limpar_Lista_entrys()
         self.Colocar_na_Lista()
         print('Tarefa Deletada......................................./')
+        self.colocar_no_Painel_1()
 
     def AlterarTarefaLista(self):
         self.codigo = self.ListacodeEntry.get()
@@ -160,6 +162,7 @@ class funcs():
         self.limpar_Lista_entrys()
         self.Colocar_na_Lista()
         self.desconectarDB()
+        self.colocar_no_Painel_1()
 
     def BuscarTarefaLista(self):
         self.conectarDB()
@@ -184,17 +187,17 @@ class funcs():
 
     def colocar_no_Painel_1(self):
         self.lista = self.listaTarefas.get_children()
-        listaV1 = []
+        self.listaV1 = []
         i = 1
         for v in self.lista:
-            listaV1 = self.listaTarefas.item(v)["values"]
+            self.listaV1 = self.listaTarefas.item(v)["values"]
             if i == 1:
                 break
 
-        tarefa_TODO["codigo"] = listaV1[0]
-        tarefa_TODO["titulo"] = listaV1[1]
-        tarefa_TODO["descricao"] = listaV1[2]
-        tarefa_TODO["prazo"] = listaV1[3]
+        tarefa_TODO["codigo"] = self.listaV1[0]
+        tarefa_TODO["titulo"] = self.listaV1[1]
+        tarefa_TODO["descricao"] = self.listaV1[2]
+        tarefa_TODO["prazo"] = self.listaV1[3]
 
 
 # ------ FRONT - END ---------
