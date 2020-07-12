@@ -11,7 +11,7 @@ from cache import *
 root = Tk()
 
 # ------ FRONT - END ---------
-class Aplication(funcs, ):
+class Aplication(funcs):
     def __init__(self):
         self.root = root
         self.tela()
