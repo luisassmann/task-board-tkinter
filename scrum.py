@@ -202,7 +202,8 @@ class Aplication(funcs):
         # =========================================================
         # Botão Fazer;;;
         self.fazerbut = Button(self.tela_inicial, text='Fazer', fg='#fff', font=('Roboto',11,'bold'),
-                               bd=1, bg='#11c033', activebackground='#118844')
+                               bd=1, bg='#11c033', activebackground='#118844',
+                               command=self.botao_fazer_painel_2)
         self.fazerbut.place(relx=0.88, rely=0.28, relwidth=0.1, relheight=0.06)
 
         # =========================================================

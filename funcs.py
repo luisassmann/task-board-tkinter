@@ -177,5 +177,6 @@ class funcs(task):
         self.tarefa_TODO["prazo"] = self.listaV1[3]
 
     def botao_fazer_painel_2(self):
-        self.variaveis_tarefas()
+        self.colocar_no_Painel_1()
         
+        print(self.tarefa_TODO)

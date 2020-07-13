@@ -5,6 +5,7 @@ from tkinter import tix
 from tkinter import ttk
 import sqlite3
 
+# Is only for template this funcs;;;
 class task():
     def variaveis_tarefas(self):
         self.tarefa_TODO = {
