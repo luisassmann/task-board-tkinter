@@ -10,9 +10,9 @@ class task():
     def padrao_tarefas(self):
         self.tarefaF1 = {
             "codigo": "",
-            "titulo": "",
-            "descricao": "",
-            "prazo": ""
+            "titulo": "Adicione uma tarefa",
+            "descricao": "Vá para guia NOVA TAREFA\npreencha os campos\ne salve-a",
+            "prazo": "^_~"
         }
 
         self.tarefaF2 = {

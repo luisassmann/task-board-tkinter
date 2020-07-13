@@ -53,14 +53,14 @@ class Aplication(funcs):
         # To do;;;
         self.frame1 = Frame(self.tela_inicial, bd=4, bg='#e0e0e0', highlightthickness=3,
                             highlightbackground='#556666')
-        self.frame1.place(relx=0.01, rely=0.1, relwidth=0.85, relheight=0.26)
+        self.frame1.place(relx=0.01, rely=0.08, relwidth=0.85, relheight=0.26)
         # ---
 
         # =========================================================
         # Do;;;
         self.frame2 = Frame(self.tela_inicial, bd=4, bg='#e0e0e0', highlightthickness=3,
                             highlightbackground='#556666')
-        self.frame2.place(relx=0.01, rely=0.4, relwidth=0.85, relheight=0.26)
+        self.frame2.place(relx=0.01, rely=0.405, relwidth=0.85, relheight=0.26)
 
         # ---
 
@@ -68,7 +68,7 @@ class Aplication(funcs):
         # Finish;;;
         self.frame3 = Frame(self.tela_inicial, bd=4, bg='#e0e0e0', highlightthickness=3,
                             highlightbackground='#556666')
-        self.frame3.place(relx=0.01, rely=0.7, relwidth=0.85, relheight=0.26)
+        self.frame3.place(relx=0.01, rely=0.73, relwidth=0.85, relheight=0.26)
 
         # ---
 
@@ -189,10 +189,16 @@ class Aplication(funcs):
 
     def widgets(self):
 
-        self.novobut = Button(self.tela_inicial, text='TAREFAS', fg='#fff', font=('Roboto', 11, 'bold'),
+        self.afazerbut = Button(self.tela_inicial, text='A Fazer', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff',
                               command=self.colocar_no_Painel_1)
-        self.novobut.place(relx=0.01, rely=0.02, relwidth=0.85, relheight=0.06)
+        self.afazerbut.place(relx=0.01, rely=0.018, relwidth=0.85, relheight=0.06)
+        self.progressobut = Button(self.tela_inicial, text='Em Progresso', fg='#fff', font=('Roboto', 11, 'bold'),
+                              bd=0, bg='#0e5fef', activebackground='#aaeeff')
+        self.progressobut.place(relx=0.01, rely=0.3425, relwidth=0.85, relheight=0.06)
+        self.feitosbut = Button(self.tela_inicial, text='Feito', fg='#fff', font=('Roboto', 11, 'bold'),
+                              bd=0, bg='#0e5fef', activebackground='#aaeeff')
+        self.feitosbut.place(relx=0.01, rely=0.6677, relwidth=0.85, relheight=0.06)
         # =========================================================
         # Botão Apagar Tarefa;;;
         self.apagarbut = Button(self.tela_inicial, text='Apagar', fg='#fff', font=('Roboto', 11, 'bold'),
@@ -249,16 +255,17 @@ class Aplication(funcs):
         self.listaTarefas.bind('<Double-1>', self.Selecionar_da_Lista)
 
     def Tarefa_a_fazer(self):
-        self.tituloF1 = Label(self.frame1, text=self.tarefa_TODO["titulo"], bg='#e5e5e5',
+        self.padrao_tarefas()
+        self.tituloF1 = Label(self.frame1, text=self.tarefaF1["titulo"], bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF1 = Label(self.frame1, text=self.tarefa_TODO["descricao"], bg='#e5e5e5',
+        self.descricF1 = Label(self.frame1, text=self.tarefaF1["descricao"], bg='#e5e5e5',
                                fg='#0c0c0c', font=('Roboto', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF1 = Label(self.frame1, text=self.tarefa_TODO["prazo"], bg='#e5e5e5',
+        self.prazoF1 = Label(self.frame1, text=self.tarefaF1["prazo"], bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
