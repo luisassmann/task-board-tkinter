@@ -178,5 +178,7 @@ class funcs(task):
 
     def botao_fazer_painel_2(self):
         self.colocar_no_Painel_1()
+        self.tarefaDO_titulo = self.tarefa_TODO["titulo"]
+        self.tarefaDO_descricao = self.tarefa_TODO["descricao"]
+        self.tarefaDO_prazo = self.tarefa_TODO["prazo"]
         
-        print(self.tarefa_TODO)
