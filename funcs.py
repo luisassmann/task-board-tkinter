@@ -43,6 +43,10 @@ class funcs(task):
             );
         """)
 
+        self.cursor.execute("""
+            INSERT INTO tarefas (status) VALUES (?)
+        """, ('0'))
+
         self.conn.commit()
         print('Banco de Dados Criado................................./')
 
