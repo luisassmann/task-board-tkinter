@@ -43,10 +43,6 @@ class funcs(task):
             );
         """)
 
-        self.cursor.execute("""
-            INSERT INTO tarefas (status) VALUES (?)
-        """, ('0'))
-
         self.conn.commit()
         print('Banco de Dados Criado................................./')
 
@@ -57,6 +53,7 @@ class funcs(task):
         self.titulo = self.entryTitulo.get().strip().capitalize()
         self.descricao = self.entryDescricao.get('1.0', 'end').strip()
         self.prazo = self.entryPrazo.get().strip()
+        self.status = '0'
 
     def inserirTarefa_Lista(self):
         self.valores_Tarefa()
@@ -69,10 +66,10 @@ class funcs(task):
 
         else:
             self.cursor.execute("""
-                INSERT INTO tarefas (titulo, descricao, prazo)
-                    VALUES (?, ?, ?)
+                INSERT INTO tarefas (titulo, descricao, prazo, status)
+                    VALUES (?, ?, ?, ?)
             """,
-            (self.titulo, self.descricao, self.prazo))
+            (self.titulo, self.descricao, self.prazo, self.status))
 
         self.conn.commit()
         self.desconectarDB()
@@ -114,7 +111,7 @@ class funcs(task):
 
         self.cursor.execute("""
             DELETE FROM tarefas WHERE code = ?
-        """,(
+            """,(
             self.code
         ))
         self.conn.commit()
@@ -123,7 +120,6 @@ class funcs(task):
         self.limpar_Lista_entrys()
         self.Colocar_na_Lista()
         print('Tarefa Deletada......................................./')
-        self.colocar_no_Painel_1()
 
     def AlterarTarefaLista(self):
         self.codigo = self.ListacodeEntry.get()

@@ -227,7 +227,7 @@ class Aplication(funcs):
 
         self.listaTarefas = ttk.Treeview(
             self.lista_de_tarefas_, height=3,
-            column=('col1', 'col2', 'col3', 'col4'),
+            column=('col1', 'col2', 'col3', 'col4', 'col5'),
             style='mystyle.Treeview'
         )
         self.listaTarefas.tag_configure('odd', background='#E8E8E8')
@@ -237,12 +237,14 @@ class Aplication(funcs):
         self.listaTarefas.heading('#2', text='Título')
         self.listaTarefas.heading('#3', text='Descrição')
         self.listaTarefas.heading('#4', text='Prazo')
+        self.listaTarefas.heading('#5', text='Status')
 
         self.listaTarefas.column('#0', width=1)
         self.listaTarefas.column('#1', width=30, anchor='center')
         self.listaTarefas.column('#2', width=120)
         self.listaTarefas.column('#3', width=180)
-        self.listaTarefas.column('#4', width=100, anchor='center')
+        self.listaTarefas.column('#4', width=75, anchor='center')
+        self.listaTarefas.column('#5', width=25)
 
         self.listaTarefas.place(relx=0.03, rely=0.4, relwidth=0.93, relheight=0.55)
 
