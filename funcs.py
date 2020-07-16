@@ -38,7 +38,8 @@ class funcs(task):
                 code INTEGER PRIMARY KEY,
                 titulo CHAR(50) NOT NULL,
                 descricao CHAR(200),
-                prazo CHAR(40)
+                prazo CHAR(40),
+                status CHAR(20)
             );
         """)
 
@@ -130,7 +131,7 @@ class funcs(task):
         self.cursor.execute("""
             UPDATE tarefas SET titulo = ?, descricao = ?, prazo = ?
                 WHERE code = ?;
-        """,(self.titulo, self.descricao, self.prazo, self.codigo))
+        """, (self.titulo, self.descricao, self.prazo, self.codigo))
 
         self.conn.commit()
 
@@ -160,25 +161,15 @@ class funcs(task):
         self.limpar_Lista_entrys()
         self.desconectarDB()
 
-    def colocar_no_Painel_1(self):
-
-        self.variaveis_tarefas()
-        self.lista = self.listaTarefas.get_children()
-        self.listaV1 = []
-        i = 1
-        for v in self.lista:
-            self.listaV1 = self.listaTarefas.item(v)["values"]
-            if i == 1:
-                break
-
-        self.tarefa_TODO["codigo"] = self.listaV1[0]
-        self.tarefa_TODO["titulo"] = self.listaV1[1]
-        self.tarefa_TODO["descricao"] = self.listaV1[2]
-        self.tarefa_TODO["prazo"] = self.listaV1[3]
-
-    def botao_fazer_painel_2(self):
-        self.colocar_no_Painel_1()
-        self.tarefaDO_titulo = self.tarefa_TODO["titulo"]
-        self.tarefaDO_descricao = self.tarefa_TODO["descricao"]
-        self.tarefaDO_prazo = self.tarefa_TODO["prazo"]
+    def show_in_frame_1(self):
+        self.conectarDB()
         
+        listis = self.cursor.execute("""
+            SELECT titulo, descricao, prazo, status FROM tarefas
+                ORDER BY code ASC;
+        """)
+        
+        for c in listis:
+            print(c)
+        
+        self.desconectarDB()

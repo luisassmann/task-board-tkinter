@@ -20,10 +20,10 @@ class Aplication(funcs):
         self.lista_de_Tarefas()
         self.montarTable()
         self.Colocar_na_Lista()
-        self.colocar_no_Painel_1()
         self.Tarefa_a_fazer()
         self.Tarefa_fazendo()
         self.Tarefa_feita()
+        self.show_in_frame_1()
         self.root.mainloop()
 
     def tela(self):
@@ -190,8 +190,7 @@ class Aplication(funcs):
     def widgets(self):
 
         self.afazerbut = Button(self.tela_inicial, text='A Fazer', fg='#fff', font=('Roboto', 11, 'bold'),
-                              bd=0, bg='#0e5fef', activebackground='#aaeeff',
-                              command=self.colocar_no_Painel_1)
+                              bd=0, bg='#0e5fef', activebackground='#aaeeff')
         self.afazerbut.place(relx=0.01, rely=0.018, relwidth=0.85, relheight=0.06)
         self.progressobut = Button(self.tela_inicial, text='Em Progresso', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff')
@@ -208,8 +207,7 @@ class Aplication(funcs):
         # =========================================================
         # Botão Fazer;;;
         self.fazerbut = Button(self.tela_inicial, text='Fazer', fg='#fff', font=('Roboto',11,'bold'),
-                               bd=1, bg='#11c033', activebackground='#118844',
-                               command=self.botao_fazer_painel_2)
+                               bd=1, bg='#11c033', activebackground='#118844')
         self.fazerbut.place(relx=0.88, rely=0.28, relwidth=0.1, relheight=0.06)
 
         # =========================================================
@@ -256,31 +254,30 @@ class Aplication(funcs):
 
     def Tarefa_a_fazer(self):
         self.padrao_tarefas()
-        self.tituloF1 = Label(self.frame1, text=self.tarefaF1["titulo"], bg='#e5e5e5',
+        self.tituloF1 = Label(self.frame1, text='', bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF1.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF1 = Label(self.frame1, text=self.tarefaF1["descricao"], bg='#e5e5e5',
+        self.descricF1 = Label(self.frame1, text='', bg='#e5e5e5',
                                fg='#0c0c0c', font=('Roboto', 13))
         self.descricF1.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF1 = Label(self.frame1, text=self.tarefaF1["prazo"], bg='#e5e5e5',
+        self.prazoF1 = Label(self.frame1, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF1.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
     def Tarefa_fazendo(self):
-        self.botao_fazer_painel_2()
-        self.tituloF2 = Label(self.frame2, text=self.tarefaDO_titulo, bg='#e5e5e5',
+        self.tituloF2 = Label(self.frame2, text='', bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center')
         self.tituloF2.place(relx=0.1, rely=0.01, relwidth=0.8, relheight=0.25)
 
-        self.descricF2 = Label(self.frame2, text=self.tarefaDO_descricao, bg='#e5e5e5',
+        self.descricF2 = Label(self.frame2, text='', bg='#e5e5e5',
                                fg='#0c0c0c', font=('Roboto', 13))
         self.descricF2.place(relx=0.02, rely=0.35, relwidth=0.5, relheight=0.5)
 
-        self.prazoF2 = Label(self.frame2, text=self.tarefaDO_prazo, bg='#e5e5e5',
+        self.prazoF2 = Label(self.frame2, text='', bg='#e5e5e5',
                              fg='#0c0c0c', font=('Roboto', 13), justify='center')
         self.prazoF2.place(relx=0.6, rely=0.5, relwidth=0.3, relheight=0.2)
 
