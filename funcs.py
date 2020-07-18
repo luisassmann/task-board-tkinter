@@ -169,8 +169,15 @@ class funcs(task):
                 ORDER BY code ASC;
         """)
         registro = self.cursor.fetchall()
+
+        # on tuple registro order = (0 == code;; 1 == titulo;; 2 == descricao;;
+        # ;; 3 == prazo;; 4 == status)
         
+        x = 1
         for c in registro:
             print(c)
-        
+            print(len(c))
+            if x == 1:
+                break
+
         self.desconectarDB()
