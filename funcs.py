@@ -164,12 +164,13 @@ class funcs(task):
     def show_in_frame_1(self):
         self.conectarDB()
         
-        listis = self.cursor.execute("""
-            SELECT titulo, descricao, prazo, status FROM tarefas
+        self.cursor.execute("""
+            SELECT code, titulo, descricao, prazo, status FROM tarefas
                 ORDER BY code ASC;
         """)
+        registro = self.cursor.fetchall()
         
-        for c in listis:
+        for c in registro:
             print(c)
         
         self.desconectarDB()
