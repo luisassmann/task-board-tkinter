@@ -13,6 +13,7 @@ class task():
             "titulo": "Adicione uma tarefa",
             "descricao": "Vá para guia NOVA TAREFA\npreencha os campos\ne salve-a",
             "prazo": "^_~"
+            "status": '0'
         }
 
         self.tarefaF2 = {
@@ -20,13 +21,15 @@ class task():
             "titulo": "",
             "descricao": "",
             "prazo": ""
+            "status": '0'
         }
 
         self.tarefaF3 = {
             "codigo": "",
             "titulo": "",
             "descricao": "",
-            "prazo": ""
+            "prazo": "",
+            "status": '0'
         }
 
     def variaveis_tarefas(self):
@@ -34,19 +37,22 @@ class task():
             "codigo": "",
             "titulo": "",
             "descricao": "",
-            "prazo": ""
+            "prazo": "",
+            "status": '0'
         }
 
         self.tarefa_DO = {
             "codigo": "",
             "titulo": "",
             "descricao": "",
-            "prazo": ""
+            "prazo": "",
+            "status": '0'
         }
 
         self.tarefa_DONE = {
             "codigo": "",
             "titulo": "",
             "descricao": "",
-            "prazo": ""
+            "prazo": "",
+            "status": '0'
         }
