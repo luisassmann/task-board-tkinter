@@ -180,5 +180,9 @@ class funcs(task):
             if x == 1:
                 break
         # The next pass is organizate this for a distribute this values;;;
+        
+        self.tituloFF = registro[1]
+        self.descricaoFF = registro[2]
+        self.prazoFF = registro[3]
 
         self.desconectarDB()
