@@ -173,16 +173,13 @@ class funcs(task):
         # on tuple registro order = (0 == code;; 1 == titulo;; 2 == descricao;;
         # ;; 3 == prazo;; 4 == status)
         
+        lista_of_1 = []
         x = 1
         for c in registro:
-            print(c)
+            lista_of_1 = c[:]
             print(len(c))
             if x == 1:
                 break
-        # The next pass is organizate this for a distribute this values;;;
         
-        self.tituloFF = registro[1]
-        self.descricaoFF = registro[2]
-        self.prazoFF = registro[3]
-
+        print(lista_of_1)
         self.desconectarDB()
