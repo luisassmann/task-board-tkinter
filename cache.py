@@ -38,21 +38,18 @@ class task():
             "titulo": "",
             "descricao": "",
             "prazo": "",
-            "status": '0'
-        }
+            "status": '0'}
 
         self.tarefa_DO = {
             "codigo": "",
             "titulo": "",
             "descricao": "",
             "prazo": "",
-            "status": '0'
-        }
+            "status": '0'}
 
         self.tarefa_DONE = {
             "codigo": "",
             "titulo": "",
             "descricao": "",
             "prazo": "",
-            "status": '0'
-        }
+            "status": '0'}

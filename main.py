@@ -68,10 +68,7 @@ class Aplication(funcs):
         # Finish;;;
         self.frame3 = Frame(self.tela_inicial, bd=4, bg='#e0e0e0', highlightthickness=3,
                             highlightbackground='#556666')
-        self.frame3.place(relx=0.01, rely=0.73, relwidth=0.85, relheight=0.26)
-
-        # ---
-
+        self.frame3.place(relx=0.01, rely=0.73, relwidth=0.85, relheight=0.26
         # =========================================================
         # LISTA DE TAREFAS;;;
 
