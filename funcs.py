@@ -23,11 +23,11 @@ class funcs(task):
     def conectarDB(self):
         self.conn = sqlite3.connect('./tarefas.db')
         self.cursor = self.conn.cursor()
-        print('Banco de Dados Conectado............................../')
+        #print('Banco de Dados Conectado............................../')
 
     def desconectarDB(self):
         self.cursor.close()
-        print('Banco de Dados Desconectado.........................../')
+        #print('Banco de Dados Desconectado.........................../')
 
     def montarTable(self):
         self.conectarDB()
@@ -43,7 +43,7 @@ class funcs(task):
         """)
 
         self.conn.commit()
-        print('Banco de Dados Criado................................./')
+        #print('Banco de Dados Criado................................./')
 
         self.desconectarDB()
 
@@ -73,7 +73,7 @@ class funcs(task):
         self.conn.commit()
         self.desconectarDB()
         self.limpar_NovaTarefa()
-        print('Nova Tarefa Adicionada................................/')
+        #print('Nova Tarefa Adicionada................................/')
         self.Colocar_na_Lista()
 
     def Colocar_na_Lista(self):
@@ -89,7 +89,7 @@ class funcs(task):
             self.listaTarefas.insert('', END, values=val)
 
         self.desconectarDB()
-        print('Tarefa(s) está na lista.............................../')
+        #print('Tarefa(s) está na lista.............................../')
 
         self.desconectarDB()
 
@@ -118,7 +118,7 @@ class funcs(task):
         self.desconectarDB()
         self.limpar_Lista_entrys()
         self.Colocar_na_Lista()
-        print('Tarefa Deletada......................................./')
+        #print('Tarefa Deletada......................................./')
 
     def AlterarTarefaLista(self):
         self.codigo = self.ListacodeEntry.get()
@@ -162,23 +162,41 @@ class funcs(task):
 
     def show_in_frame_1(self):
         self.conectarDB()
-        
+        self.variaveis_tarefas()
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
                 ORDER BY code ASC;
         """)
         registro = self.cursor.fetchall()
-
-        # on tuple registro order = (0 == code;; 1 == titulo;; 2 == descricao;;
-        # ;; 3 == prazo;; 4 == status)
-        
         lista_of_1 = []
         x = 1
         for c in registro:
+            if c[4] == '0':
+                c[4] == '1'
             lista_of_1 = c[:]
-            print(len(c))
+            #print(len(c))
             if x == 1:
                 break
         
-        print(lista_of_1)
+        #print(lista_of_1)
+        
+        # the order of lista_of_1 => 0 == code;; 1 == titulo;; 2 == descricao;;
+        # 3 == descricao;; 4 == status;;;
+        self.tarefa_TODO["codigo"] = lista_of_1[0]
+        self.tarefa_TODO["titulo"] = lista_of_1[1]
+        self.tarefa_TODO["descricao"] = lista_of_1[2]
+        self.tarefa_TODO["prazo"] = lista_of_1[3]
+        self.tarefa_TODO["status"] = lista_of_1[4]
+
         self.desconectarDB()
+
+    def goto_frame_2(self):
+        # Transfer the values of the tarefa_TODO to tarefa_DO;;
+        self.variaveis_tarefas()
+        
+        # --------------------------------
+        self.tarefa_DO["codigo"] = self.tarefa_TODO["codigo"]
+        self.tarefa_DO["titulo"] = self.tarefa_TODO["titulo"]
+        self.tarefa_DO["descricao"] = self.tarefa_TODO["descricao"]
+        self.tarefa_DO["prazo"] = self.tarefa_TODO["prazo"]
+        self.tarefa_DO["status"] = self.tarefa_TODO["status"]

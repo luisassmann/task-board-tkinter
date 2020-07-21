@@ -12,7 +12,7 @@ class task():
             "codigo": "",
             "titulo": "Adicione uma tarefa",
             "descricao": "Vá para guia NOVA TAREFA\npreencha os campos\ne salve-a",
-            "prazo": "^_~"
+            "prazo": "^_~",
             "status": '0'
         }
 
@@ -20,7 +20,7 @@ class task():
             "codigo": "",
             "titulo": "",
             "descricao": "",
-            "prazo": ""
+            "prazo": "",
             "status": '0'
         }
 
@@ -38,18 +38,21 @@ class task():
             "titulo": "",
             "descricao": "",
             "prazo": "",
-            "status": '0'}
+            "status": '0'
+        }
 
         self.tarefa_DO = {
-            "codigo": "",
+            "codigo": "ff",
             "titulo": "",
             "descricao": "",
             "prazo": "",
-            "status": '0'}
+            "status": '0'
+        }
 
         self.tarefa_DONE = {
             "codigo": "",
             "titulo": "",
             "descricao": "",
             "prazo": "",
-            "status": '0'}
+            "status": '0'
+        }
