@@ -179,5 +179,6 @@ class funcs(task):
             print(len(c))
             if x == 1:
                 break
+        # The next pass is organizate this for a distribute this values;;;
 
         self.desconectarDB()
