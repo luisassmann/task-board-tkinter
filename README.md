@@ -1,20 +1,17 @@
-# scrum-tkinter
+# task-board-tkinter
 
 
-Scrum-task-board with python.
+task-board with python.
 
 
-## ⁉ O que é o Scrum?
+## ⁉ O que é o Task Board?
 
-- O Scrum é uma ferramenta de organização excelente e necessária em várias situações, como trabalho, escola ou até pessoalmente.
+- O Task Board é uma ferramenta de organização excelente e necessária em várias situações, como trabalho, escola ou até pessoalmente.
 
 
 ## 🖥 Requisitos
 
-- [Python 3+](http://www.python.org/)
-    - Tkinter
-- Sqlite3 ➡ ``pip install sqlite3``
-
+- Ter o [Python 3+](http://www.python.org/) instalado na máquina.
 
 ## 🎡 Como Rodar
 
