@@ -6,7 +6,7 @@ from tkinter import messagebox
 from tkinter import tix
 from tkinter import ttk
 import sqlite3
-from cache import *
+from src.cache import *
 
 class funcs(task):
     def limpar_NovaTarefa(self):
@@ -163,6 +163,7 @@ class funcs(task):
     def show_in_frame_1(self):
         self.conectarDB()
         self.variaveis_tarefas()
+
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
                 ORDER BY code ASC;
@@ -188,15 +189,7 @@ class funcs(task):
         self.tarefa_TODO["prazo"] = lista_of_1[3]
         self.tarefa_TODO["status"] = lista_of_1[4]
 
-        # - Limpar a entry do Frame 1;;;
-        self.tituloF1.delete(0, END)
-        self.descricF1.delete('1.0', 'end')
-        self.tituloF1.delete(0, END)
-
-        # - Inserir values in the entrys;;;
-        self.tituloF1.insert(END, self.tarefa_TODO["titulo"])
-        self.descricF1.insert('1.0', self.tarefa_TODO["descricao"])
-        self.prazoF1.insert(END, self.tarefa_TODO["prazo"])
+        
 
         self.desconectarDB()
 

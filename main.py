@@ -5,8 +5,8 @@ from tkinter import tix
 from tkinter import ttk
 import sqlite3
 
-from funcs import *
-from cache import *
+from src.funcs import *
+from src.cache import *
 
 root = Tk()
 
