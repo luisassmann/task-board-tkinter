@@ -188,6 +188,16 @@ class funcs(task):
         self.tarefa_TODO["prazo"] = lista_of_1[3]
         self.tarefa_TODO["status"] = lista_of_1[4]
 
+        # - Limpar a entry do Frame 1;;;
+        self.tituloF1.delete(0, END)
+        self.descricF1.delete('1.0', 'end')
+        self.tituloF1.delete(0, END)
+
+        # - Inserir values in the entrys;;;
+        self.tituloF1.insert(END, self.tarefa_TODO["titulo"])
+        self.descricF1.insert('1.0', self.tarefa_TODO["descricao"])
+        self.prazoF1.insert(END, self.tarefa_TODO["prazo"])
+
         self.desconectarDB()
 
     def goto_frame_2(self):
