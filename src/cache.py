@@ -5,7 +5,6 @@ from tkinter import tix
 from tkinter import ttk
 import sqlite3
 
-# Is only for template this funcs;;;
 class task():
     def padrao_tarefas(self):
         self.tarefaF1 = {

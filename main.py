@@ -4,12 +4,10 @@ from tkinter import messagebox
 from tkinter import tix
 from tkinter import ttk
 import sqlite3
-
 from src.funcs import *
 from src.cache import *
 
 root = Tk()
-
 
 class Aplication(funcs):
     def __init__(self):

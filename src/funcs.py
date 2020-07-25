@@ -1,5 +1,3 @@
-# Aqui vou colocar todas as funções do back-end;;;
-
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
