@@ -18,6 +18,12 @@ class funcs(task):
         self.ListaDescricaoEntry.delete('1.0', 'end')
         self.ListaPrazoEntry.delete(0, END)
 
+    def limpar_F1(self):
+        # Clean the entrys;;
+        self.tituloF1.delete(0, END)
+        self.descricF1.delete('1.0', 'end')
+        self.prazoF1.delete(0, END)
+
     def conectarDB(self):
         self.conn = sqlite3.connect('./tarefas.db')
         self.cursor = self.conn.cursor()
@@ -162,6 +168,7 @@ class funcs(task):
         self.conectarDB()
         self.variaveis_tarefas()
         self.Tarefa_a_fazer()
+        self.limpar_F1()
 
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
@@ -174,37 +181,22 @@ class funcs(task):
             if c[4] == '0':
                 c[4] == '1'
             lista_of_1 = c[:]
-            #print(len(c))
             if x == 1:
                 break
-        
-        #print(lista_of_1)
-        
-        # the order of lista_of_1 => 0 == code;; 1 == titulo;; 2 == descricao;;
-        # 3 == descricao;; 4 == status;;;
+
         self.tarefa_TODO["codigo"] = lista_of_1[0]
         self.tarefa_TODO["titulo"] = lista_of_1[1]
         self.tarefa_TODO["descricao"] = lista_of_1[2]
         self.tarefa_TODO["prazo"] = lista_of_1[3]
         self.tarefa_TODO["status"] = lista_of_1[4]
 
-        # Clean the entrys;;
-        self.tituloF1.delete(0, END)
-        self.descricF1.delete('1.0', 'end')
-        self.prazoF1.delete(0, END)
-
-        # Put the values on the entrys;;
         self.tituloF1.insert(END, self.tarefa_TODO["titulo"])
         self.descricF1.insert('1.0', self.tarefa_TODO["descricao"])
         self.prazoF1.insert(END, self.tarefa_TODO["prazo"])
-        
-
-        
 
         self.desconectarDB()
 
     def goto_frame_2(self):
-        # Transfer the values of the tarefa_TODO to tarefa_DO;;
         self.variaveis_tarefas()
         
         # --------------------------------
