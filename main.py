@@ -21,6 +21,7 @@ class Aplication(funcs):
         self.Tarefa_a_fazer()
         self.Tarefa_fazendo()
         self.Tarefa_feita()
+        self.show_in_frame_1()
         self.root.mainloop()
 
     def tela(self):
@@ -250,8 +251,6 @@ class Aplication(funcs):
         self.listaTarefas.bind('<Double-1>', self.Selecionar_da_Lista)
 
     def Tarefa_a_fazer(self):
-        self.padrao_tarefas()
-        self.show_in_frame_1()
         self.tituloF1 = Entry(self.frame1, bg='#e5e5e5',
                               fg='#0c0c0c', font=('Roboto', 14, 'bold'),
                               justify='center', bd=0)

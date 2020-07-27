@@ -161,6 +161,7 @@ class funcs(task):
     def show_in_frame_1(self):
         self.conectarDB()
         self.variaveis_tarefas()
+        self.Tarefa_a_fazer()
 
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
@@ -186,6 +187,17 @@ class funcs(task):
         self.tarefa_TODO["descricao"] = lista_of_1[2]
         self.tarefa_TODO["prazo"] = lista_of_1[3]
         self.tarefa_TODO["status"] = lista_of_1[4]
+
+        # Clean the entrys;;
+        self.tituloF1.delete(0, END)
+        self.descricF1.delete('1.0', 'end')
+        self.prazoF1.delete(0, END)
+
+        # Put the values on the entrys;;
+        self.tituloF1.insert(END, self.tarefa_TODO["titulo"])
+        self.descricF1.insert('1.0', self.tarefa_TODO["descricao"])
+        self.prazoF1.insert(END, self.tarefa_TODO["prazo"])
+        
 
         
 
