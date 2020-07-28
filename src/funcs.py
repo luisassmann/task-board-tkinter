@@ -205,19 +205,13 @@ class funcs(task):
         self.tarefa_DO["descricao"] = self.tarefa_TODO["descricao"]
         self.tarefa_DO["prazo"] = self.tarefa_TODO["prazo"]
         self.tarefa_DO["status"] = '1'
-
-        self.conectarDB()
-        self.cursor.execute("""
-            UPDATE tarefas SET status = "1" 
-                WHERE code = ?;    
-        """, (self.tarefa_DO["codigo"],))
         
+        self.conectarDB()
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
                 ORDER BY code ASC;
         """)
         registro = self.cursor.fetchall()
-        self.conn.commit()
         lista_of_2 = []
         x = 1
         for c in registro:
@@ -227,6 +221,3 @@ class funcs(task):
             if x == 1:
                 break
         self.desconectarDB()
-
-        print(self.tarefa_DO["status"])
-        print(lista_of_2)
