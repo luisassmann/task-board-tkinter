@@ -65,22 +65,17 @@ class funcs(task):
     def inserirTarefa_Lista(self):
         self.valores_Tarefa()
         self.conectarDB()
-
         aviso_msg = 'É Necessário colocar ao menos um título na tarefa! ⚠'
-
         if self.titulo == '' or len(self.titulo) <= 1:
             messagebox.showwarning('Sem Título - Aviso!', aviso_msg)
-
         else:
             self.cursor.execute("""
                 INSERT INTO tarefas (titulo, descricao, prazo, status)
                     VALUES (?, ?, ?, ?)
             """,
             (self.titulo, self.descricao, self.prazo, self.status))
-
         self.desconectarDB()
         self.limpar_NovaTarefa()
-        #print('Nova Tarefa Adicionada................................/')
         self.Colocar_na_Lista()
 
     def Colocar_na_Lista(self):
