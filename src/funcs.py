@@ -32,7 +32,6 @@ class funcs(task):
     def conectarDB(self):
         self.conn = sqlite3.connect('./tarefas.db')
         self.cursor = self.conn.cursor()
-        #print('Banco de Dados Conectado............................../')
 
     def desconectarDB(self):
         self.cursor.close()
@@ -204,7 +203,6 @@ class funcs(task):
         self.tarefa_DO["titulo"] = self.tarefa_TODO["titulo"]
         self.tarefa_DO["descricao"] = self.tarefa_TODO["descricao"]
         self.tarefa_DO["prazo"] = self.tarefa_TODO["prazo"]
-        self.tarefa_DO["status"] = '1'
         
         self.conectarDB()
         self.cursor.execute("""
