@@ -78,7 +78,6 @@ class funcs(task):
             """,
             (self.titulo, self.descricao, self.prazo, self.status))
 
-        self.conn.commit()
         self.desconectarDB()
         self.limpar_NovaTarefa()
         #print('Nova Tarefa Adicionada................................/')
