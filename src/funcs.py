@@ -24,6 +24,11 @@ class funcs(task):
         self.descricF1.delete('1.0', 'end')
         self.prazoF1.delete(0, END)
 
+    def limpar_F2(self):
+        self.tituloF2.delete(0, END)
+        self.descricF2.delete('1.0', 'end')
+        self.prazoF2.delete(0, END)
+
     def conectarDB(self):
         self.conn = sqlite3.connect('./tarefas.db')
         self.cursor = self.conn.cursor()
@@ -141,7 +146,6 @@ class funcs(task):
         self.limpar_Lista_entrys()
         self.Colocar_na_Lista()
         self.desconectarDB()
-        self.colocar_no_Painel_1()
 
     def BuscarTarefaLista(self):
         self.conectarDB()
@@ -198,10 +202,34 @@ class funcs(task):
 
     def goto_frame_2(self):
         self.variaveis_tarefas()
-        
         # --------------------------------
         self.tarefa_DO["codigo"] = self.tarefa_TODO["codigo"]
         self.tarefa_DO["titulo"] = self.tarefa_TODO["titulo"]
         self.tarefa_DO["descricao"] = self.tarefa_TODO["descricao"]
         self.tarefa_DO["prazo"] = self.tarefa_TODO["prazo"]
-        self.tarefa_DO["status"] = self.tarefa_TODO["status"]
+        self.tarefa_DO["status"] = '1'
+
+        self.conectarDB()
+        self.cursor.execute("""
+            UPDATE tarefas SET status = ? 
+                WHERE code = ?;    
+        """, (self.tarefa_DO["status"], self.tarefa_DO["codigo"]))
+        
+        self.cursor.execute("""
+            SELECT code, titulo, descricao, prazo, status FROM tarefas
+                ORDER BY code ASC;
+        """)
+        registro = self.cursor.fetchall()
+        self.conn.commit()
+        lista_of_2 = []
+        x = 1
+        for c in registro:
+            if c[4] == '0':
+                c[4] == '1'
+            lista_of_2 = c[:]
+            if x == 1:
+                break
+        self.desconectarDB()
+
+        print(self.tarefa_DO["status"])
+        print(lista_of_2)

@@ -22,6 +22,7 @@ class Aplication(funcs):
         self.Tarefa_fazendo()
         self.Tarefa_feita()
         self.show_in_frame_1()
+        self.goto_frame_2()
         self.root.mainloop()
 
     def tela(self):
@@ -183,7 +184,6 @@ class Aplication(funcs):
         self.Salvar.place(relx=0.65, rely=0.64, relwidth=0.3, relheight=0.15)
 
     def widgets(self):
-        self.goto_frame_2()
         self.afazerbut = Button(self.tela_inicial, text='A Fazer', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff')
         self.afazerbut.place(relx=0.01, rely=0.018, relwidth=0.85, relheight=0.06)
