@@ -212,6 +212,13 @@ class Aplication(funcs):
                                bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222')
         self.feitobut.place(relx=0.88, rely=0.5, relwidth=0.1, relheight=0.06)
 
+        # ====================================
+        # Botão Sair;;;
+        self.sairbut = Button(self.tela_inicial, text='Sair', fg='#fff', font=('Roboto', 11, 'bold'),
+                               bd=1, bg='#e03232', activebackground='#109933', activeforeground='#222222',
+                               command=self.root.destroy)
+        self.sairbut.place(relx=0.88, rely=0.92, relwidth=0.1, relheight=0.06)
+
     def lista_de_Tarefas(self):
         # --- LISTA DE TAREFAS ---
         self.style = ttk.Style()

@@ -4,7 +4,7 @@ from tkinter import messagebox
 from tkinter import tix
 from tkinter import ttk
 import sqlite3
-from cache import *
+from src.cache import *
 
 class funcs(task):
     def limpar_NovaTarefa(self):
