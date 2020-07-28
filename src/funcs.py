@@ -90,15 +90,12 @@ class funcs(task):
         self.conectarDB()
 
         lista = self.cursor.execute("""
-            SELECT code, titulo, descricao, prazo FROM tarefas
+            SELECT code, titulo, descricao, prazo, status FROM tarefas
                 ORDER BY code ASC;
         """)
 
         for val in lista:
             self.listaTarefas.insert('', END, values=val)
-
-        self.desconectarDB()
-        #print('Tarefa(s) está na lista.............................../')
 
         self.desconectarDB()
 
@@ -107,7 +104,7 @@ class funcs(task):
         self.listaTarefas.selection()
 
         for dado in self.listaTarefas.selection():
-            col1, col2, col3, col4 = self.listaTarefas.item(dado, 'values')
+            col1, col2, col3, col4, col5 = self.listaTarefas.item(dado, 'values')
             self.ListacodeEntry.insert(END, col1)
             self.ListaTituloEntry.insert(END, col2)
             self.ListaDescricaoEntry.insert('1.0', col3)
@@ -211,9 +208,9 @@ class funcs(task):
 
         self.conectarDB()
         self.cursor.execute("""
-            UPDATE tarefas SET status = ? 
+            UPDATE tarefas SET status = "1" 
                 WHERE code = ?;    
-        """, (self.tarefa_DO["status"], self.tarefa_DO["codigo"]))
+        """, (self.tarefa_DO["codigo"],))
         
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
