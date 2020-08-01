@@ -47,7 +47,7 @@ class Aplication(funcs):
         self.lista_tarefas_prontas.configure(background='#c1c1c1')
 
         self.abas.add(self.tela_inicial, text='  PAINEL  ')
-        self.abas.add(self.novaTarefa, text="   NOVA TAREFA   ")
+        self.abas.add(self.novaTarefa, text="   ==> NOVA TAREFA <==   ")
         self.abas.add(self.lista_de_tarefas_, text='  LISTA DE TAREFAS  ')
         self.abas.add(self.lista_tarefas_prontas, text='  TAREFAS CONCLUÍDAS  ')
 
@@ -187,6 +187,64 @@ class Aplication(funcs):
                              command=self.inserirTarefa_Lista)
         self.Salvar.place(relx=0.65, rely=0.64, relwidth=0.3, relheight=0.15)
 
+        # ------------------------------------------------
+        self.frame_prontas = Frame(self.lista_tarefas_prontas, bd=4, bg='#e5e5e5', highlightthickness=3,
+                            highlightbackground='#556666')
+        self.frame_prontas.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.35)
+        # ================================================================================
+        self.label_code_prontas = Label(self.frame_prontas, text="code", bg='#e5e5e5',
+                                        font=('Roboto', 12))
+        self.label_code_prontas.place(relx=0.018, rely=0.01)
+        self.entry_code_prontas = Entry(self.frame_prontas, borderwidth=0, bg='#c4c4c4', fg='#000',
+                                    font=('Roboto', 12, 'bold'), justify='center')
+        self.entry_code_prontas.place(relx=0.018, rely=0.15, relwidth=0.05, relheight=0.14)
+
+
+        self.label_tit_prontas = Label(self.frame_prontas, text='Título', bg='#e5e5e5',
+                                 font=('Roboto', 12))
+        self.label_tit_prontas.place(relx=0.1, rely=0.01)
+        self.entry_tit_prontas = Entry(self.frame_prontas, borderwidth=1, bg='#fff', fg='#000',
+                                      font=('Roboto', 12))
+        self.entry_tit_prontas.place(relx=0.088, rely=0.15, relwidth=0.72, relheight=0.14)
+
+
+        self.label_desc_prontas = Label(self.frame_prontas, text='Descrição', bg='#e5e5e5',
+                                 font=('Roboto', 12))
+        self.label_desc_prontas.place(relx=0.03, rely=0.3)
+        self.entry_desc_prontas = Text(self.frame_prontas, borderwidth=1, bg='#fff', fg='#000',
+                                      font=('Roboto', 12))
+        self.entry_desc_prontas.place(relx=0.01, rely=0.44, relwidth=0.5, relheight=0.5)
+
+
+        self.label_prazo_prontas = Label(self.frame_prontas, text='Prazo', bg='#e5e5e5',
+                                 font=('Roboto', 12))
+        self.label_prazo_prontas.place(relx=0.55, rely=0.3)
+        self.entry_prazo_prontas = Entry(self.frame_prontas, borderwidth=1, bg='#fff', fg='#000',
+                                      font=('Roboto', 12))
+        self.entry_prazo_prontas.place(relx=0.53, rely=0.44, relwidth=0.28, relheight=0.14)
+
+
+        self.buscar_botao_prontas = Button(self.frame_prontas, text='Buscar', bd=1, bg='#11c099',
+                                    font=('Roboto', 12, 'bold'), fg='#fff')
+        self.buscar_botao_prontas.place(relx=0.84, rely=0.1, relwidth=0.14, relheight=0.2)
+
+
+        self.limpar_botao_prontas = Button(self.frame_prontas, text='Limpar', bd=1, bg='#a0a0a0',
+                                    font=('Roboto', 12, 'bold'), fg='#222222')
+        self.limpar_botao_prontas.place(relx=0.84, rely=0.4, relwidth=0.14, relheight=0.2)
+
+
+        self.apagar_botao_prontas = Button(self.frame_prontas, text='Excluir Definitivamente', bd=1, bg='#c02222',
+                                   font=('Roboto', 12, 'bold'), fg='#fff')
+        self.apagar_botao_prontas.place(relx=0.6, rely=0.7, relwidth=0.38, relheight=0.2)
+
+
+        # ================================================================================
+        self.frame_ta_prontas = Frame(self.lista_tarefas_prontas, bd=4, bg='#e5e5e5', highlightthickness=3,
+                                highlightbackground='#556666')
+        self.frame_ta_prontas.place(relx=0.01, rely=0.38, relwidth=0.98, relheight=0.6)
+
+
     def widgets(self):
         self.afazerbut = Button(self.tela_inicial, text='A Fazer', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff')
@@ -261,6 +319,9 @@ class Aplication(funcs):
         self.scrollLista.place(relx=0.945, rely=0.4, relwidth=0.035, relheight=0.55)
 
         self.listaTarefas.bind('<Double-1>', self.Selecionar_da_Lista)
+
+    def lista_tarefas_prontas(self):
+        
 
     def Tarefa_a_fazer(self):
         self.tituloF1 = Entry(self.frame1, bg='#e0e0e0',
