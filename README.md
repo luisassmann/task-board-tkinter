@@ -15,7 +15,10 @@ task-board with python.
 
 ## 🎡 Como Rodar
 
-- Entrar na pasta do arquivo scrum.py e rodar o comando `python scrum.py`
+- Entrar na pasta do arquivo main.py e rodar o comando 
+```
+python main.py
+```
 
 
 ## ⚖ Liçenca
