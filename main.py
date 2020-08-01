@@ -246,7 +246,6 @@ class Aplication(funcs):
                                 highlightbackground='#556666')
         self.frame_ta_prontas.place(relx=0.01, rely=0.38, relwidth=0.98, relheight=0.6)
 
-
     def widgets(self):
         self.afazerbut = Button(self.tela_inicial, text='A Fazer', fg='#fff', font=('Roboto', 11, 'bold'),
                               bd=0, bg='#0e5fef', activebackground='#aaeeff')
