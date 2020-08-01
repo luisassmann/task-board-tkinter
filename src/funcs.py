@@ -164,6 +164,28 @@ class funcs(task):
         self.limpar_Lista_entrys()
         self.desconectarDB()
 
+    def conectar_prontasDB(self):
+        self.conn_prontas = sqlite3.connect('./prontas.db')
+        self.cursor_prontas = self.conn_prontas.cursor()
+
+    def desconectar_prontasDB(self):
+        self.cursor_prontas.close()
+
+    def montar_tabela_prontas(self):
+        self.conectar_prontasDB()
+
+        self.cursor_prontas.execute("""
+            CREATE TABLE IF NOT EXISTS prontas (
+                code INTEGER PRIMARY KEY,
+                titulo CHAR(50) NOT NULL,
+                descricao CHAR(200),
+                prazo CHAR(40),
+                status CHAR(20)
+            );
+        """)
+
+        self.desconectar_prontasDB()
+
     def show_in_frame_1(self):
         self.conectarDB()
         self.variaveis_tarefas()
@@ -266,3 +288,25 @@ class funcs(task):
         self.tituloF1.insert(END, self.lista_of_4[1])
         self.descricF1.insert('1.0', self.lista_of_4[2])
         self.prazoF1.insert(END, self.lista_of_4[3])
+
+        # Inserir a tarefa feita no banco de dados 'prontas.db';;;
+        # Os dados da tarefa feita esta na lista 'self.lista_of_2';;;
+        self.conectar_prontasDB()
+
+        self.cursor_prontas.execute("""
+            INSERT INTO prontas (titulo, descricao, prazo, status)
+                VALUES(?, ?, ?, ?)
+        """,
+        (self.lista_of_2[1], self.lista_of_2[2], self.lista_of_2[3], self.lista_of_2[4]))
+        self.conn_prontas.commit()
+
+        self.desconectar_prontasDB()
+
+        # Deletar a tarefa feita da lista de tarefas principal;;;
+        self.conectarDB()
+        self.cursor.execute("""
+            DELETE FROM tarefas WHERE code = ?
+        """, (self.lista_of_2[0],))
+        self.conn.commit()
+        self.desconectarDB()
+        self.Colocar_na_Lista()

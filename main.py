@@ -17,6 +17,7 @@ class Aplication(funcs):
         self.widgets()
         self.lista_de_Tarefas()
         self.montarTable()
+        self.montar_tabela_prontas()
         self.Colocar_na_Lista()
         self.Tarefa_a_fazer()
         self.Tarefa_fazendo()
@@ -33,18 +34,22 @@ class Aplication(funcs):
     def frames(self):
         # Criação de duas tabelas Notebook para melhor organ. de espaço;;;
         self.abas = ttk.Notebook(self.root)
+        
         self.tela_inicial = Frame(self.abas)
         self.novaTarefa = Frame(self.abas)
         self.lista_de_tarefas_ = Frame(self.abas)
+        self.lista_tarefas_prontas = Frame(self.abas)
 
 
         self.tela_inicial.configure(background="#c1c1c1")
         self.novaTarefa.configure(background="#c1c1c1")
         self.lista_de_tarefas_.configure(background='#c1c1c1')
+        self.lista_tarefas_prontas.configure(background='#c1c1c1')
 
         self.abas.add(self.tela_inicial, text='  PAINEL  ')
         self.abas.add(self.novaTarefa, text="   NOVA TAREFA   ")
         self.abas.add(self.lista_de_tarefas_, text='  LISTA DE TAREFAS  ')
+        self.abas.add(self.lista_tarefas_prontas, text='  TAREFAS CONCLUÍDAS  ')
 
         self.abas.place(relx=0, rely=0, relwidth=1, relheight=1)
 

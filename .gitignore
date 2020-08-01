@@ -5,6 +5,7 @@ __pycache__/
 .idea/
 .vscode/
 tarefas.db
+prontas.db
 
 # C extensions
 *.so
