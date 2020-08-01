@@ -175,20 +175,20 @@ class funcs(task):
                 ORDER BY code ASC;
         """)
         registro = self.cursor.fetchall()
-        lista_of_1 = []
+        self.lista_of_1 = []
         x = 1
         for c in registro:
             if c[4] == '0':
                 c[4] == '1'
-            lista_of_1 = c[:]
+            self.lista_of_1 = c[:]
             if x == 1:
                 break
 
-        self.tarefa_TODO["codigo"] = lista_of_1[0]
-        self.tarefa_TODO["titulo"] = lista_of_1[1]
-        self.tarefa_TODO["descricao"] = lista_of_1[2]
-        self.tarefa_TODO["prazo"] = lista_of_1[3]
-        self.tarefa_TODO["status"] = lista_of_1[4]
+        self.tarefa_TODO["codigo"] = self.lista_of_1[0]
+        self.tarefa_TODO["titulo"] = self.lista_of_1[1]
+        self.tarefa_TODO["descricao"] = self.lista_of_1[2]
+        self.tarefa_TODO["prazo"] = self.lista_of_1[3]
+        self.tarefa_TODO["status"] = self.lista_of_1[4]
 
         self.tituloF1.insert(END, self.tarefa_TODO["titulo"])
         self.descricF1.insert('1.0', self.tarefa_TODO["descricao"])
@@ -206,12 +206,12 @@ class funcs(task):
                 ORDER BY code ASC;
         """)
         registro = self.cursor.fetchall()
-        lista_of_2 = []
+        self.lista_of_2 = []
         x = 1
         for c in registro:
             if c[4] == '0':
                 c[4] == '1'
-            lista_of_2 = c[:]
+            self.lista_of_2 = c[:]
             if x == 1:
                 break
         self.desconectarDB()
@@ -219,25 +219,50 @@ class funcs(task):
         self.limpar_F1()
         self.limpar_F2()
 
-        self.tituloF2.insert(END, lista_of_2[1])
-        self.descricF2.insert('1.0', lista_of_2[2])
-        self.prazoF2.insert(END, lista_of_2[3])
+        self.tituloF2.insert(END, self.lista_of_2[1])
+        self.descricF2.insert('1.0', self.lista_of_2[2])
+        self.prazoF2.insert(END, self.lista_of_2[3])
         
         self.conectarDB()
 
         self.cursor.execute("""
-            SELECT * FROM tarefas WHERE code = ?
-        """, (lista_of_2[0] + 1,))
+            SELECT * FROM tarefas WHERE code = ?;
+        """, (self.lista_of_2[0] + 1,))
 
-        reg = self.cursor.fetchone()
+        self.lista_of_3 = self.cursor.fetchone()
         self.desconectarDB()
 
         self.limpar_F1()
-        self.tituloF1.insert(END, reg[1])
-        self.descricF1.insert('1.0', reg[2])
-        self.prazoF1.insert(END, reg[3])
+        self.tituloF1.insert(END, self.lista_of_3[1])
+        self.descricF1.insert('1.0', self.lista_of_3[2])
+        self.prazoF1.insert(END, self.lista_of_3[3])
 
     def goto_frame_3(self):
+        self.show_in_frame_1()
         self.goto_frame_2()
         self.Tarefa_feita()
+
+        self.limpar_F3()
+
+        self.tituloF3.insert(END, self.lista_of_2[1])
+        self.descricF3.insert('1.0', self.lista_of_2[2])
+        self.prazoF3.insert(END, self.lista_of_2[3])
+
+        self.limpar_F2()
+
+        self.tituloF2.insert(END, self.lista_of_3[1])
+        self.descricF2.insert('1.0', self.lista_of_3[2])
+        self.prazoF2.insert(END, self.lista_of_3[3])
+
+        self.limpar_F1()
+
+        self.conectarDB()
+        self.cursor.execute("""
+            SELECT * FROM tarefas WHERE code = ?;
+        """, (self.lista_of_3[0] + 1,))
+        self.lista_of_4 = self.cursor.fetchone()
+        self.desconectarDB()
         
+        self.tituloF1.insert(END, self.lista_of_4[1])
+        self.descricF1.insert('1.0', self.lista_of_4[2])
+        self.prazoF1.insert(END, self.lista_of_4[3])

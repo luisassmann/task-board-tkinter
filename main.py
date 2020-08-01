@@ -208,7 +208,8 @@ class Aplication(funcs):
         # =========================================================
         # Botão Feito;;;
         self.feitobut = Button(self.tela_inicial, text='Feito', fg='#fff', font=('Roboto', 11, 'bold'),
-                               bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222')
+                               bd=1, bg='#118855', activebackground='#109933', activeforeground='#222222',
+                               command=self.goto_frame_3)
         self.feitobut.place(relx=0.88, rely=0.5, relwidth=0.1, relheight=0.06)
 
         # ====================================
