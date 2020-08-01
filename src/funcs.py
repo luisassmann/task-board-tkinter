@@ -79,6 +79,7 @@ class funcs(task):
                     VALUES (?, ?, ?, ?)
             """,
             (self.titulo, self.descricao, self.prazo, self.status))
+            self.conn.commit()
         self.desconectarDB()
         self.limpar_NovaTarefa()
         self.Colocar_na_Lista()
@@ -198,11 +199,7 @@ class funcs(task):
     def goto_frame_2(self):
         self.show_in_frame_1()
         self.Tarefa_fazendo()
-        # --------------------------------
-        self.tarefa_DO["codigo"] = self.tarefa_TODO["codigo"]
-        self.tarefa_DO["titulo"] = self.tarefa_TODO["titulo"]
-        self.tarefa_DO["descricao"] = self.tarefa_TODO["descricao"]
-        self.tarefa_DO["prazo"] = self.tarefa_TODO["prazo"]
+
         self.conectarDB()
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
@@ -222,6 +219,25 @@ class funcs(task):
         self.limpar_F1()
         self.limpar_F2()
 
-        self.tituloF2.insert(END, self.tarefa_DO['titulo'])
-        self.descricF2.insert('1.0', self.tarefa_DO['descricao'])
-        self.prazoF2.insert(END, self.tarefa_DO['prazo'])
+        self.tituloF2.insert(END, lista_of_2[1])
+        self.descricF2.insert('1.0', lista_of_2[2])
+        self.prazoF2.insert(END, lista_of_2[3])
+        
+        self.conectarDB()
+
+        self.cursor.execute("""
+            SELECT * FROM tarefas WHERE code = ?
+        """, (lista_of_2[0] + 1,))
+
+        reg = self.cursor.fetchone()
+        self.desconectarDB()
+
+        self.limpar_F1()
+        self.tituloF1.insert(END, reg[1])
+        self.descricF1.insert('1.0', reg[2])
+        self.prazoF1.insert(END, reg[3])
+
+    def goto_frame_3(self):
+        self.goto_frame_2()
+        self.Tarefa_feita()
+        
