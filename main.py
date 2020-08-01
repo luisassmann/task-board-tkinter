@@ -16,9 +16,11 @@ class Aplication(funcs):
         self.frames()
         self.widgets()
         self.lista_de_Tarefas()
+        self.lista_tarefas_prontas_()
         self.montarTable()
         self.montar_tabela_prontas()
         self.Colocar_na_Lista()
+        self.colocar_lista_prontas()
         self.Tarefa_a_fazer()
         self.Tarefa_fazendo()
         self.Tarefa_feita()
@@ -320,8 +322,41 @@ class Aplication(funcs):
 
         self.listaTarefas.bind('<Double-1>', self.Selecionar_da_Lista)
 
-    def lista_tarefas_prontas(self):
-        
+    def lista_tarefas_prontas_(self):
+        # --- LISTA DE TAREFAS ---
+        self.style = ttk.Style()
+        self.style.theme_use('vista')
+        self.style.configure("mystyle.Treeview", bd=0, font=('Roboto', 12),
+                             fieldbackground='#c1c1c1')
+        self.style.configure("mystyle.Treeview.Heading", font=('Roboto', 14, 'bold'))
+        self.style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})])
+
+        self.listaTarefas_prontas = ttk.Treeview(
+            self.lista_tarefas_prontas, height=3,
+            column=('col1', 'col2', 'col3', 'col4', 'col5'),
+            style='mystyle.Treeview'
+        )
+        self.listaTarefas_prontas.tag_configure('odd', background='#E8E8E8')
+        self.listaTarefas_prontas.tag_configure('even', background='#DFDFDF')
+        self.listaTarefas_prontas.heading('#0', text='##')
+        self.listaTarefas_prontas.heading('#1', text='code')
+        self.listaTarefas_prontas.heading('#2', text='Título')
+        self.listaTarefas_prontas.heading('#3', text='Descrição')
+        self.listaTarefas_prontas.heading('#4', text='Prazo')
+        self.listaTarefas_prontas.heading('#5', text='Status')
+
+        self.listaTarefas_prontas.column('#0', width=1)
+        self.listaTarefas_prontas.column('#1', width=30, anchor='center')
+        self.listaTarefas_prontas.column('#2', width=120)
+        self.listaTarefas_prontas.column('#3', width=180)
+        self.listaTarefas_prontas.column('#4', width=75, anchor='center')
+        self.listaTarefas_prontas.column('#5', width=25)
+
+        self.listaTarefas_prontas.place(relx=0.03, rely=0.4, relwidth=0.93, relheight=0.55)
+
+        self.scrollLista = Scrollbar(self.lista_tarefas_prontas, orient='vertical')
+        self.listaTarefas_prontas.configure(yscroll=self.scrollLista.set)
+        self.scrollLista.place(relx=0.945, rely=0.4, relwidth=0.035, relheight=0.55)
 
     def Tarefa_a_fazer(self):
         self.tituloF1 = Entry(self.frame1, bg='#e0e0e0',

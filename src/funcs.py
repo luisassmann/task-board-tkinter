@@ -186,6 +186,20 @@ class funcs(task):
 
         self.desconectar_prontasDB()
 
+    def colocar_lista_prontas(self):
+        self.listaTarefas_prontas.delete(*self.listaTarefas_prontas.get_children())
+        self.conectar_prontasDB()
+
+        lista = self.cursor_prontas.execute("""
+            SELECT code, titulo, descricao, prazo, status FROM prontas
+                ORDER BY code ASC;
+        """)
+
+        for val in lista:
+            self.listaTarefas_prontas.insert('', END, values=val)
+
+        self.desconectar_prontasDB()
+
     def show_in_frame_1(self):
         self.conectarDB()
         self.variaveis_tarefas()
@@ -310,3 +324,4 @@ class funcs(task):
         self.conn.commit()
         self.desconectarDB()
         self.Colocar_na_Lista()
+        self.colocar_lista_prontas()
