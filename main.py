@@ -22,7 +22,6 @@ class Aplication(funcs):
         self.Tarefa_fazendo()
         self.Tarefa_feita()
         self.show_in_frame_1()
-        self.goto_frame_2()
         self.root.mainloop()
 
     def tela(self):

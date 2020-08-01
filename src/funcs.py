@@ -29,6 +29,11 @@ class funcs(task):
         self.descricF2.delete('1.0', 'end')
         self.prazoF2.delete(0, END)
 
+    def limpar_F3(self):
+        self.tituloF3.delete(0, END)
+        self.descricF3.delete('1.0', 'end')
+        self.prazoF3.delete(0, END)
+
     def conectarDB(self):
         self.conn = sqlite3.connect('./tarefas.db')
         self.cursor = self.conn.cursor()
@@ -191,13 +196,13 @@ class funcs(task):
         self.desconectarDB()
 
     def goto_frame_2(self):
-        self.variaveis_tarefas()
+        self.show_in_frame_1()
+        self.Tarefa_fazendo()
         # --------------------------------
         self.tarefa_DO["codigo"] = self.tarefa_TODO["codigo"]
         self.tarefa_DO["titulo"] = self.tarefa_TODO["titulo"]
         self.tarefa_DO["descricao"] = self.tarefa_TODO["descricao"]
         self.tarefa_DO["prazo"] = self.tarefa_TODO["prazo"]
-        
         self.conectarDB()
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
@@ -213,3 +218,10 @@ class funcs(task):
             if x == 1:
                 break
         self.desconectarDB()
+
+        self.limpar_F1()
+        self.limpar_F2()
+
+        self.tituloF2.insert(END, self.tarefa_DO['titulo'])
+        self.descricF2.insert('1.0', self.tarefa_DO['descricao'])
+        self.prazoF2.insert(END, self.tarefa_DO['prazo'])
