@@ -227,17 +227,20 @@ class Aplication(funcs):
 
 
         self.buscar_botao_prontas = Button(self.frame_prontas, text='Buscar', bd=1, bg='#11c099',
-                                    font=('Roboto', 12, 'bold'), fg='#fff')
+                                    font=('Roboto', 12, 'bold'), fg='#fff', 
+                                    command=self.buscar_tar_pronta)
         self.buscar_botao_prontas.place(relx=0.84, rely=0.1, relwidth=0.14, relheight=0.2)
 
 
         self.limpar_botao_prontas = Button(self.frame_prontas, text='Limpar', bd=1, bg='#a0a0a0',
-                                    font=('Roboto', 12, 'bold'), fg='#222222')
+                                    font=('Roboto', 12, 'bold'), fg='#222222',
+                                    command=self.limpar_prontas_entrys)
         self.limpar_botao_prontas.place(relx=0.84, rely=0.4, relwidth=0.14, relheight=0.2)
 
 
         self.apagar_botao_prontas = Button(self.frame_prontas, text='Excluir Definitivamente', bd=1, bg='#c02222',
-                                   font=('Roboto', 12, 'bold'), fg='#fff')
+                                   font=('Roboto', 12, 'bold'), fg='#fff', 
+                                   command=self.excluir_pronta)
         self.apagar_botao_prontas.place(relx=0.6, rely=0.7, relwidth=0.38, relheight=0.2)
 
 
@@ -259,7 +262,8 @@ class Aplication(funcs):
         # =========================================================
         # Botão Apagar Tarefa;;;
         self.apagarbut = Button(self.tela_inicial, text='Apagar', fg='#fff', font=('Roboto', 11, 'bold'),
-                                bd=1, bg='#c02222', activebackground='#fe4422')
+                                bd=1, bg='#c02222', activebackground='#fe4422',
+                                command=self.apagar_tarefa_tela_ini)
         self.apagarbut.place(relx=0.88, rely=0.12, relwidth=0.1, relheight=0.06)
 
         # =========================================================
@@ -356,6 +360,8 @@ class Aplication(funcs):
         self.scrollLista = Scrollbar(self.lista_tarefas_prontas, orient='vertical')
         self.listaTarefas_prontas.configure(yscroll=self.scrollLista.set)
         self.scrollLista.place(relx=0.945, rely=0.4, relwidth=0.035, relheight=0.55)
+
+        self.listaTarefas_prontas.bind('<Double-1>', self.selecionar_tarefas_prontas)
 
     def Tarefa_a_fazer(self):
         self.tituloF1 = Entry(self.frame1, bg='#e0e0e0',

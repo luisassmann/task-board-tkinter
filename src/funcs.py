@@ -67,6 +67,12 @@ class funcs(task):
         self.prazo = self.entryPrazo.get().strip()
         self.status = '0'
 
+    def valores_tar_prontas(self):
+        self.code_pro = self.entry_code_prontas.get()
+        self.titulo_pro = self.entry_tit_prontas.get().strip()
+        self.desc_pro = self.entry_desc_prontas.get('1.0', 'end')
+        self.prazo_pro = self.entry_prazo_prontas.get()
+
     def inserirTarefa_Lista(self):
         self.valores_Tarefa()
         self.conectarDB()
@@ -123,7 +129,7 @@ class funcs(task):
         self.desconectarDB()
         self.limpar_Lista_entrys()
         self.Colocar_na_Lista()
-        #print('Tarefa Deletada......................................./')
+        self.show_in_frame_1()
 
     def AlterarTarefaLista(self):
         self.codigo = self.ListacodeEntry.get()
@@ -142,6 +148,7 @@ class funcs(task):
         self.limpar_Lista_entrys()
         self.Colocar_na_Lista()
         self.desconectarDB()
+        self.show_in_frame_1()
 
     def BuscarTarefaLista(self):
         self.conectarDB()
@@ -200,12 +207,62 @@ class funcs(task):
 
         self.desconectar_prontasDB()
 
+    def limpar_prontas_entrys(self):
+        self.entry_code_prontas.delete(0, END)
+        self.entry_tit_prontas.delete(0, END)
+        self.entry_desc_prontas.delete('1.0', 'end')
+        self.entry_prazo_prontas.delete(0, END)
+
+    def selecionar_tarefas_prontas(self, event):
+        self.limpar_prontas_entrys()
+        self.listaTarefas_prontas.selection()
+
+        for valor in self.listaTarefas_prontas.selection():
+            col1, col2, col3, col4, col5 = self.listaTarefas_prontas.item(valor, 'value')
+            self.entry_code_prontas.insert(END, col1)
+            self.entry_tit_prontas.insert(END, col2)
+            self.entry_desc_prontas.insert('1.0', col3)
+            self.entry_prazo_prontas.insert(END, col4)
+
+    def excluir_pronta(self):
+        self.valores_tar_prontas()
+        self.conectar_prontasDB()
+
+        self.cursor_prontas.execute("""
+            DELETE FROM prontas WHERE code = ?;
+        """, (self.code_pro,))
+        self.conn_prontas.commit()
+
+        self.limpar_prontas_entrys()
+        self.desconectar_prontasDB()
+        self.colocar_lista_prontas()
+
+    def buscar_tar_pronta(self):
+        self.conectar_prontasDB()
+        self.listaTarefas_prontas.delete(*self.listaTarefas_prontas.get_children())
+
+        self.entry_tit_prontas.insert(END, '%')
+        titulo = self.entry_tit_prontas.get()
+
+        self.cursor_prontas.execute("""
+            SELECT code, titulo, descricao, prazo FROM prontas
+                WHERE titulo LIKE '%s' ORDER BY code ASC;
+        """ % titulo)
+
+        self.BuscaTarefa = self.cursor_prontas.fetchall()
+        for t in self.BuscaTarefa:
+            self.listaTarefas_prontas.insert('', END, values=t)
+
+
+        self.limpar_prontas_entrys()
+        self.desconectar_prontasDB()
+
     def show_in_frame_1(self):
         self.conectarDB()
         self.variaveis_tarefas()
         self.Tarefa_a_fazer()
         self.limpar_F1()
-
+        
         self.cursor.execute("""
             SELECT code, titulo, descricao, prazo, status FROM tarefas
                 ORDER BY code ASC;
@@ -229,7 +286,6 @@ class funcs(task):
         self.tituloF1.insert(END, self.tarefa_TODO["titulo"])
         self.descricF1.insert('1.0', self.tarefa_TODO["descricao"])
         self.prazoF1.insert(END, self.tarefa_TODO["prazo"])
-
         self.desconectarDB()
 
     def goto_frame_2(self):
@@ -325,3 +381,16 @@ class funcs(task):
         self.desconectarDB()
         self.Colocar_na_Lista()
         self.colocar_lista_prontas()
+
+    def apagar_tarefa_tela_ini(self):
+        self.show_in_frame_1()
+        self.conectarDB()
+
+        self.cursor.execute("""
+            DELETE FROM tarefas WHERE code = ?;
+            """, (self.lista_of_1[0],))
+        self.conn.commit()
+
+        self.Colocar_na_Lista()
+        self.show_in_frame_1()
+        self.desconectarDB()
