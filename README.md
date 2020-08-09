@@ -24,3 +24,7 @@ python main.py
 ## ⚖ Liçenca
 
 - [MIT License](https://github.com/luisassmann/scrum-tkinter/blob/master/LICENSE?raw=True)
+
+## 📷 Display
+
+![task-board](https://github.com/luisassmann/task-board-tkinter/tree/master/src/images/task-board.png?raw=True)
