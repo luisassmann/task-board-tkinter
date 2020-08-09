@@ -27,4 +27,4 @@ python main.py
 
 ## 📷 Display
 
-![task-board](https://github.com/luisassmann/task-board-tkinter/tree/master/src/images/task-board.png?raw=True)
+![task-board](https://github.com/luisassmann/task-board-tkinter/tree/master/src/images/task-board.png?raw=true)
