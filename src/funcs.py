@@ -383,6 +383,8 @@ class funcs(task):
         self.colocar_lista_prontas()
 
     def apagar_tarefa_tela_ini(self):
+        # Possível mudança desse método para não mudar a legibilidade
+        # Das telas
         self.show_in_frame_1()
         self.conectarDB()
 
