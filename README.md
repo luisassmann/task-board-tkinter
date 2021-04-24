@@ -6,7 +6,7 @@ task-board with python.
 
 ## ⁉ O que é o Task Board?
 
-- O Task Board é uma ferramenta de organização excelente e necessária em várias situações, como trabalho, escola ou até pessoalmente.
+- O Task Board é uma ferramenta de organização.
 
 
 ## 🖥 Requisitos
