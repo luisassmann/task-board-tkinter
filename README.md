@@ -9,20 +9,13 @@ task-board with python.
 - O Task Board é uma ferramenta de organização.
 
 
-## 🖥 Requisitos
+## Requisitos
 
 - Ter o [Python 3+](http://www.python.org/) instalado na máquina.
 
-## 🎡 Como Rodar
+## Como Rodar
 
-- Entrar na pasta do arquivo main.py e rodar o comando 
-```
-python main.py
-```
-
-## 📷 Display
-
-![task-board](https://github.com/luisassmann/task-board-tkinter/blob/master/src/images/task-board.png?raw=true)
+- Com o Python 3 instalado, execute o comando python juntamente com o arquivo [`main.py`](https://github.com/luisassmann/task-board-tkinter/blob/master/main.py)
 
 ## ⚖ Liçenca
 
